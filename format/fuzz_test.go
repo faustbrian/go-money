@@ -4,10 +4,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	"github.com/faustbrian/golib/pkg/international/locale"
-	"github.com/faustbrian/golib/pkg/money"
-	moneyformat "github.com/faustbrian/golib/pkg/money/format"
+	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-international/locale"
+	"github.com/faustbrian/go-money"
+	moneyformat "github.com/faustbrian/go-money/format"
 )
 
 func FuzzLocale(f *testing.F) {

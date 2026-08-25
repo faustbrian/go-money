@@ -3,8 +3,8 @@ package money
 import (
 	"context"
 
-	gomath "github.com/faustbrian/golib/pkg/math"
-	"github.com/faustbrian/golib/pkg/math/rational"
+	gomath "github.com/faustbrian/go-math"
+	"github.com/faustbrian/go-math/rational"
 )
 
 // DiscountRate is an exact validated fraction in the inclusive range [0, 1].

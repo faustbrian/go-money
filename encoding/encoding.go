@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	"github.com/faustbrian/golib/pkg/money"
+	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-money"
 )
 
 const (

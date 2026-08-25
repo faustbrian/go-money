@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "repository": "github.com/faustbrian/go-money",
+  "packages": [
+    {
+      "module_directory": ".",
+      "directory": ".",
+      "name": "money",
+      "import_path": "github.com/faustbrian/go-money",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": ".",
+      "directory": "encoding",
+      "name": "encoding",
+      "import_path": "github.com/faustbrian/go-money/encoding",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": ".",
+      "directory": "format",
+      "name": "format",
+      "import_path": "github.com/faustbrian/go-money/format",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": ".",
+      "directory": "moneytest",
+      "name": "moneytest",
+      "import_path": "github.com/faustbrian/go-money/moneytest",
+      "kind": "test support",
+      "production": false,
+      "executable": true,
+      "coverage_required": false,
+      "build_required": true,
+      "build_tags": []
+    }
+  ]
+}

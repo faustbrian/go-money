@@ -6,11 +6,11 @@ import (
 	"strings"
 	"testing"
 
-	international "github.com/faustbrian/golib/pkg/international"
-	"github.com/faustbrian/golib/pkg/international/currency"
-	gomath "github.com/faustbrian/golib/pkg/math"
-	"github.com/faustbrian/golib/pkg/math/integer"
-	"github.com/faustbrian/golib/pkg/math/rational"
+	international "github.com/faustbrian/go-international"
+	"github.com/faustbrian/go-international/currency"
+	gomath "github.com/faustbrian/go-math"
+	"github.com/faustbrian/go-math/integer"
+	"github.com/faustbrian/go-math/rational"
 )
 
 func TestEveryAuthoritativeCurrencyCanBeRepresentedExplicitly(t *testing.T) {

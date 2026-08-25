@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/faustbrian/golib/pkg/international/locale"
-	"github.com/faustbrian/golib/pkg/money"
+	"github.com/faustbrian/go-international/locale"
+	"github.com/faustbrian/go-money"
 	textcurrency "golang.org/x/text/currency"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"

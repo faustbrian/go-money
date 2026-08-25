@@ -3,8 +3,8 @@ package money
 import (
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	"github.com/faustbrian/golib/pkg/math/integer"
+	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-math/integer"
 )
 
 func TestMinorUnitConstructionRoundTripsWithoutNarrowing(t *testing.T) {

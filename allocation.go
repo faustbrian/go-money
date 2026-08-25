@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/faustbrian/golib/pkg/math/integer"
+	"github.com/faustbrian/go-math/integer"
 )
 
 // MaxAllocationParts bounds output and remainder-distribution work.

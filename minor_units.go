@@ -3,8 +3,8 @@ package money
 import (
 	"strings"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	"github.com/faustbrian/golib/pkg/math/integer"
+	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-math/integer"
 )
 
 // FromMinorUnits constructs Money from an arbitrary-precision integer count of

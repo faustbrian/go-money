@@ -34,5 +34,5 @@ conditions.
 `Convert` requires an `ExchangeRate` containing base, quote, exact rate,
 observation time, and bounded source attribution.
 
-Use `go doc github.com/faustbrian/golib/pkg/money` for signatures and package-level
+Use `go doc github.com/faustbrian/go-money` for signatures and package-level
 examples.

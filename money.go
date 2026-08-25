@@ -4,8 +4,8 @@ import (
 	stdcontext "context"
 	"fmt"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	"github.com/faustbrian/golib/pkg/math/decimal"
+	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-math/decimal"
 )
 
 // Money is an immutable exact decimal amount bound to one currency and one

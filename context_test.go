@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
+	"github.com/faustbrian/go-international/currency"
 )
 
 func TestDefaultContextUsesAuthoritativeCurrencyMinorUnits(t *testing.T) {

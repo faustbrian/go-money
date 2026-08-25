@@ -9,9 +9,9 @@ go test -count=1 -covermode=atomic -coverpkg=.,./encoding,./format \
 
 awk '
     BEGIN {
-        expected["github.com/faustbrian/golib/pkg/money"] = 1
-        expected["github.com/faustbrian/golib/pkg/money/encoding"] = 1
-        expected["github.com/faustbrian/golib/pkg/money/format"] = 1
+        expected["github.com/faustbrian/go-money"] = 1
+        expected["github.com/faustbrian/go-money/encoding"] = 1
+        expected["github.com/faustbrian/go-money/format"] = 1
     }
     FNR == 1 { next }
     {

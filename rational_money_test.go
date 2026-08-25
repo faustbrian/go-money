@@ -5,8 +5,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	gomath "github.com/faustbrian/golib/pkg/math"
+	"github.com/faustbrian/go-international/currency"
+	gomath "github.com/faustbrian/go-math"
 )
 
 func TestMoneyRateArithmeticStaysRationalUntilExplicitRounding(t *testing.T) {

@@ -5,6 +5,8 @@ semantic versioning after the first tagged release.
 
 ## Unreleased
 
+## 1.0.0 - 2026-08-25
+
 ### Documentation
 
 - Link the package README to the repository-wide Golib documentation portal.
@@ -16,6 +18,7 @@ semantic versioning after the first tagged release.
 
 ### Changed
 
+- Publish the module from its standalone `github.com/faustbrian/go-money` identity while preserving its documented API and behavior.
 - Refresh local `v0.0.0` owned-module checksums after dependency manifests and
   release notes were normalized; runtime behavior and public APIs are
   unchanged.

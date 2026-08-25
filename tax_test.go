@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	gomath "github.com/faustbrian/golib/pkg/math"
+	"github.com/faustbrian/go-international/currency"
+	gomath "github.com/faustbrian/go-math"
 )
 
 func TestExclusiveAndInclusiveTaxPreserveTheirDocumentedTotals(t *testing.T) {

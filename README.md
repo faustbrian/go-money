@@ -1,5 +1,15 @@
 # money
 
+[![CI](https://github.com/faustbrian/go-money/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-money/actions/workflows/ci.yml)
+[![CodeQL](https://img.shields.io/badge/CodeQL-required-blue)](https://github.com/faustbrian/go-money/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-100%25_required-blue)](CONTRIBUTING.md#verification)
+[![Mutation](https://img.shields.io/badge/mutation-100%25_required-blue)](CONTRIBUTING.md#verification)
+[![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
+[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money.svg)](https://pkg.go.dev/github.com/faustbrian/go-money)
+[![Release](https://img.shields.io/github/v/release/faustbrian/go-money?sort=semver)](https://github.com/faustbrian/go-money/releases)
+[![Go](https://img.shields.io/badge/go-1.26.6-00ADD8?logo=go)](https://go.dev/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 `money` is an immutable exact monetary value package. It delegates decimal,
 integer, and rational arithmetic to `math` and delegates ISO 4217 identity
 and metadata to `international/currency`.
@@ -12,7 +22,7 @@ the boundary where a fixed amount is required.
 ## Install
 
 ```sh
-go get github.com/faustbrian/golib/pkg/money
+go get github.com/faustbrian/go-money
 ```
 
 The monorepo checkout uses local replacements for the sibling `math` and

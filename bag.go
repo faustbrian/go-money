@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
+	"github.com/faustbrian/go-international/currency"
 )
 
 // MaxMoneyBagEntries bounds heterogeneous output and lookup work.

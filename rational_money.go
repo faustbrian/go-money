@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	gomath "github.com/faustbrian/golib/pkg/math"
-	"github.com/faustbrian/golib/pkg/math/rational"
+	"github.com/faustbrian/go-international/currency"
+	gomath "github.com/faustbrian/go-math"
+	"github.com/faustbrian/go-math/rational"
 )
 
 // RationalMoney is an immutable exact fractional monetary result. It must be

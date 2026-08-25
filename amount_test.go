@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/math/decimal"
+	"github.com/faustbrian/go-math/decimal"
 )
 
 func TestAmountIsAnExactBoundedDecimalDomainValue(t *testing.T) {

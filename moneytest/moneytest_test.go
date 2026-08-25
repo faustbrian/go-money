@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/international/currency"
-	"github.com/faustbrian/golib/pkg/math/integer"
-	"github.com/faustbrian/golib/pkg/money"
-	"github.com/faustbrian/golib/pkg/money/moneytest"
+	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-math/integer"
+	"github.com/faustbrian/go-money"
+	"github.com/faustbrian/go-money/moneytest"
 )
 
 func TestFixturesAndConservationAssertionsCoverCurrencyEdges(t *testing.T) {
