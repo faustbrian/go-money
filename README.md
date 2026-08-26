@@ -25,9 +25,6 @@ the boundary where a fixed amount is required.
 go get github.com/faustbrian/go-money
 ```
 
-The monorepo checkout uses local replacements for the sibling `math` and
-`international` modules.
-
 ## Quick start
 
 ```go
@@ -80,7 +77,7 @@ See [docs/api.md](docs/api.md),
 [docs/contexts-and-rounding.md](docs/contexts-and-rounding.md), and
 [docs/cookbook.md](docs/cookbook.md).
 
-## Ecosystem
+## Documentation
 
-Use the [Golib documentation portal](https://github.com/faustbrian/golib/blob/main/docs/index.md)
-to choose companion packages, supported stacks, recipes, and operations guidance.
+Use the [documentation index](docs/README.md) for package-owned guides,
+operational contracts, examples, and maintainer references.
