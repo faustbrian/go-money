@@ -12,12 +12,7 @@
   ],
   "ignorePaths": [
     ".artifacts/**",
-    ".task-cache/**",
-    "docs/engineering-inventory.md",
-    "docs/goal-traceability.md",
-    "docs/module-dependencies.md",
-    "docs/package-catalog.md",
-    "docs/source-documentation-audit.md"
+    ".task-cache/**"
   ],
   "ignoreRegExpList": [
     "/`[^`\\n]+`/g",

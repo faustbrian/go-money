@@ -2,7 +2,7 @@
 
 ## Before Editing
 
-1. Read [`AGENTS.md`](AGENTS.md) and the affected module's goals and docs.
+1. Read [`AGENTS.md`](AGENTS.md) and the affected module's docs.
 2. Run `make inventory` and the narrow baseline gate for the module.
 3. Identify owned dependencies and reverse dependants in `modules.json`.
 4. Preserve unrelated work and generated/corpus provenance.
@@ -45,7 +45,7 @@ Before submitting a repository-wide change:
 make ci
 ```
 
-The full scheduled and release gate is `make ci`. Report every unavailable or
+The full local repository contract is `make ci`. Report every unavailable or
 failing command; do not describe partial results as release-ready.
 
 ## Adding A Module
