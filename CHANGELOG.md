@@ -8,7 +8,7 @@ semantic versioning after the first tagged release.
 ### Changed
 
 - Replace copied repository-local verification tooling with the released
-  `go-library-tools` v1.0.5 contract while preserving package-owned evidence,
+  `go-library-tools` v1.0.6 contract while preserving package-owned evidence,
   API baselines, and source-specific verification operations.
 
 ### Documentation
