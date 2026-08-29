@@ -17,6 +17,11 @@ packages. Weighted allocation and cash-rounding policies use independent
 conservation and hand-calculated matrices because those policies are not
 identical across packages.
 
-Use `make benchmark` on the target architecture. Benchmark results are valid
-only when the correctness preflight passes. Prefer minor-unit fixed operations
-for hot paths and retain rational results only until the required boundary.
+The `benchmark` gate runs the benchmark suite on the target architecture after
+its correctness preflight. Benchmark results are valid only when that
+preflight passes. Prefer minor-unit fixed operations for hot paths and retain
+rational results only until the required boundary.
+
+Run `golib check --module .` for the complete contract, or `make check` as the
+repository shorthand. The shared tool reports benchmark output and keeps its
+Go caches and temporary files task-owned.
