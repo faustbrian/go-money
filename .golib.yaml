@@ -1,28 +1,30 @@
 schema_version: 1
-tool_version: v1.0.13
-tool_checksums_sha256: 164e5c8abefe655958f522677856816faddbd2a8d40eba7d37ba5a031210df70
-
+tool_version: v1.0.14
+tool_checksums_sha256: 88341d2f2904925b22ec8de084fec68c5229669f1119f066ed5fccd76aee2f82
 manifest:
   modules: modules.json
   packages: packages.json
-
 evidence:
   root: .verification
-
 mutation:
   root: .verification/mutation
   imports:
     - module: .
       archive: .verification/mutation/bootstrap/root.zip
       ledger: .verification/mutation/migration-ledger.json
-
 api:
   baselines:
     - module: .
       mode: apidiff
       path: api/v1.txt
-
 operations:
+  - module: .
+    gate: test
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: no-float
+        timeout: 5m
   - module: .
     gate: docs
     steps:
@@ -31,55 +33,48 @@ operations:
         target: docs
         timeout: 20m
   - module: .
-    gate: test
-    steps:
-      - type: make
-        makefile: verification/package.mk
-        target: no-float
-        timeout: 20m
-  - module: .
     gate: fuzz
     steps:
       - type: go-test
-        packages: [.]
+        packages: ["."]
         fuzz: '^FuzzParseMoney$'
-        budget: 5s
+        budget: 10000x
         timeout: 2m
       - type: go-test
-        packages: [.]
+        packages: ["."]
         fuzz: '^FuzzAllocationConservation$'
-        budget: 5s
+        budget: 10000x
         timeout: 2m
       - type: go-test
-        packages: [.]
+        packages: ["."]
         fuzz: '^FuzzWeightedAllocationConservation$'
-        budget: 5s
+        budget: 10000x
         timeout: 2m
       - type: go-test
-        packages: [.]
+        packages: ["."]
         fuzz: '^FuzzRate$'
-        budget: 5s
+        budget: 10000x
         timeout: 2m
       - type: go-test
-        packages: [./encoding]
+        packages: ["./encoding"]
         fuzz: '^FuzzVersionedJSON$'
-        budget: 5s
+        budget: 10000x
         timeout: 2m
       - type: go-test
-        packages: [./encoding]
+        packages: ["./encoding"]
         fuzz: '^FuzzPostgreSQLNumeric$'
-        budget: 5s
+        budget: 10000x
         timeout: 2m
       - type: go-test
-        packages: [./format]
+        packages: ["./format"]
         fuzz: '^FuzzLocale$'
-        budget: 5s
+        budget: 10000x
         timeout: 2m
   - module: .
     gate: benchmark
     steps:
       - type: go-test
-        packages: [.]
-        benchmark: .
+        packages: ["./..."]
+        benchmark: "."
         budget: 100ms
         timeout: 20m

@@ -7,9 +7,9 @@ semantic versioning after the first tagged release.
 
 ### Changed
 
-- Replace copied repository tooling with the checksum-pinned
-  `go-library-tools` v1.0.13 contract while retaining package-owned policy and
-  verification evidence.
+- Replace copied repository tooling with the checksum-pinned shared contract
+  while retaining package-owned policy, API baselines, source-specific
+  operations, and verification evidence.
 
 ### Documentation
 

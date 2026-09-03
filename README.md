@@ -70,8 +70,8 @@ _ = result.Inexact()
 
 `make check` runs formatting, analysis, tests, meaningful 100% production
 coverage, race checks, docs, compatibility, dependency, float-contamination,
-and vulnerability gates. `make release-check` adds fuzzing, mutation testing,
-and correctness-gated comparative benchmarks.
+vulnerability, fuzzing, mutation, and correctness-gated comparative benchmark
+gates through the released `go-library-tools` contract.
 
 See [docs/api.md](docs/api.md),
 [docs/contexts-and-rounding.md](docs/contexts-and-rounding.md), and

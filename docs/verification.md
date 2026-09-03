@@ -1,20 +1,23 @@
 # Verification
 
-The local gates are:
+The repository contract is executed by `golib` through `make check` or `make
+ci`. The enabled gates are:
 
-- `make test`: unit, matrix, property, official-currency, SQL, JSON, and
+- `golib check`: unit, matrix, property, official-currency, SQL, JSON, and
   differential tests against `govalues/money` and `Rhymond/money`.
-- `make coverage`: meaningful 100% production statement coverage; only
-  invariant-proven defensive branches annotated in source are excluded.
-- `make race`: shared immutable values and formatter concurrency checks.
-- `make fuzz`: decimal, rate, allocation, JSON, PostgreSQL numeric, and locale
+- exact 100% production statement coverage with no threshold rounding or
+  aggregate masking.
+- race checks for shared immutable values and formatter concurrency.
+- fuzzing of decimal, rate, allocation, JSON, PostgreSQL numeric, and locale
   formatting fuzzing.
-- `make mutation`: Gremlins efficacy plus hand-selected mismatch, rounding,
+- mutation testing with exact 100% efficacy and mutant coverage, including
+  mismatch, rounding,
   remainder, sign, rate, tax, discount, and conversion mutants.
-- `make benchmark`: correctness-gated comparisons against maintained packages.
-- `make check`: formatting, vet, static analysis, lint, NilAway, docs, API,
+- correctness-gated benchmark comparisons against maintained packages.
+- formatting, vet, static analysis, lint, advisory NilAway, docs, API,
   dependencies, float contamination, and vulnerability checks.
-- `make release-check`: every local release gate.
 
-CI runs fast gates for every relevant change and scheduled fuzz, mutation, and
-vulnerability jobs. A skipped required gate is not release evidence.
+`make ci` runs repository validation and the complete enabled contract. CI uses
+the same released `go-library-tools` workflow and configuration. A skipped,
+unavailable, or advisory-only substitution for a required gate is not release
+evidence.

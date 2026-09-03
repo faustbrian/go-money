@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "repository": "github.com/faustbrian/go-money",
+  "module": ".",
+  "package": ".",
+  "gate": "mutation",
+  "input_digest": "sha256:c44a0c17feb9042e5c8ec36f8c724419f3ead17bcc372ceffa3570836f8abc44",
+  "verifier_digest": "sha256:9a9499ff68a8dfd49a0be7995590297a8ee563a1aa226bfd8b9361dc53058108",
+  "result": "passed",
+  "report_digest": "sha256:2c5f3ad6a939c7389f9b39e2bdecb4c693c720109971ade08c07279c179b8b5d",
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "arm64",
+    "GOOS": "darwin",
+    "GOVERSION": "go1.26.7",
+    "gremlins_binary_sha256": "sha256:784467fb09bc3b0d071bf58e77df4f7476b1fb58268fd32ffe61c1388fbf9348"
+  },
+  "completed_at": "2026-08-29T06:09:50.597016Z"
+}

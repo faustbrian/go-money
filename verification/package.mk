@@ -1,7 +1,7 @@
 .PHONY: docs no-float
 
 docs:
-	./scripts/check-docs.sh
+	./verification/check-docs.sh
 
 no-float:
-	./scripts/check-no-float.sh
+	./verification/check-no-float.sh
