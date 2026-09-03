@@ -7,6 +7,14 @@ semantic versioning after the first tagged release.
 
 ### Changed
 
+- Adopt the checksum-verified `go-library-tools` v1.4.0 CLI and immutable
+  reusable workflow so verification resolves released Golib dependencies
+  through their public module identities before any bootstrap fallback.
+
+- Refresh the three Golib v1.0.0 dependency checksums to their public proxy
+  identities so local, hosted, and clean-consumer verification use the same
+  immutable module archives.
+
 - Adopt the `go-library-tools` v1.3.0 schema-v2 cohesion contract and local
   `make cohesion` gate without changing the money API or runtime behavior.
 - Pin reusable CI to the immutable v1.3.0 workflow and enforce cohesion
