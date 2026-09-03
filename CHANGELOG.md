@@ -7,11 +7,28 @@ semantic versioning after the first tagged release.
 
 ### Changed
 
-- Replace copied repository-local verification tooling with the released
-  `go-library-tools` v1.0.6 contract while preserving package-owned evidence,
-  API baselines, and source-specific verification operations.
+- Adopt the checksum-verified `go-library-tools` v1.4.0 CLI and immutable
+  reusable workflow so verification resolves released Golib dependencies
+  through their public module identities before any bootstrap fallback.
+
+- Refresh the three Golib v1.0.0 dependency checksums to their public proxy
+  identities so local, hosted, and clean-consumer verification use the same
+  immutable module archives.
+
+- Adopt the `go-library-tools` v1.3.0 schema-v2 cohesion contract and local
+  `make cohesion` gate without changing the money API or runtime behavior.
+- Pin reusable CI to the immutable v1.3.0 workflow and enforce cohesion
+  metadata in the repository's required CI contract.
+
+- Replace copied repository tooling with the checksum-pinned shared contract
+  while retaining package-owned policy, API baselines, source-specific
+  operations, and verification evidence.
 
 ### Documentation
+
+- Publish the module's family, capabilities, ownership, lifecycle, supported
+  environments, package selection, and delivery status, and link the README to
+  the immutable v1.3.0 ecosystem index and family guidance.
 
 - Replace archived monorepo links and completed execution artifacts with a
   standalone, human-oriented documentation structure.
