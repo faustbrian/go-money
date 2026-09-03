@@ -81,3 +81,7 @@ See [docs/api.md](docs/api.md),
 
 Use the [documentation index](docs/README.md) for package-owned guides,
 operational contracts, examples, and maintainer references.
+
+For ecosystem-wide selection and ownership guidance, see the versioned
+[Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md)
+and its [Domain utilities family](https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/design-language.md#package-families-and-selection).
