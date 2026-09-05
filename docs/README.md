@@ -3,6 +3,7 @@
 ## Getting started
 
 - [API reference](api.md)
+- [Executable package examples](../examples_test.go)
 - [Contexts and rounding](contexts-and-rounding.md)
 - [Cookbook](cookbook.md)
 - [Formatting](formatting.md)
@@ -19,7 +20,9 @@
 - [Performance](performance.md)
 - [Compatibility](compatibility.md)
 - [PHP migration](php-migration.md)
-- [FAQ](faq.md)
+- [FAQ and troubleshooting](faq.md)
+- [Support](../SUPPORT.md)
+- [Security reporting](../SECURITY.md)
 
 ## Maintainers
 

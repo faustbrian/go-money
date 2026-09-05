@@ -7,10 +7,11 @@ first tagged release, the current `main` branch is the supported line.
 
 ## Reporting
 
-Report suspected vulnerabilities privately to the repository owner. Include a
-minimal reproducer, affected version, expected invariant, and observed impact.
-Do not attach customer records, account identifiers, or production monetary
-payloads.
+Report suspected vulnerabilities through a private
+[GitHub security advisory](https://github.com/faustbrian/go-money/security/advisories/new).
+Include a minimal reproducer, affected version, expected invariant, and
+observed impact. Do not attach customer records, account identifiers, or
+production monetary payloads.
 
 ## Threat model
 

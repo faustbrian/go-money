@@ -23,6 +23,10 @@ semantic versioning after the first tagged release.
 
 ### Documentation
 
+- Document the stable-v1 lifecycle and platform boundaries, package selection,
+  executable examples, and troubleshooting, with actionable support and
+  private security-reporting routes.
+
 - Publish the module's family, capabilities, ownership, lifecycle, supported
   environments, package selection, and delivery status, and link the README and
   catalog to the immutable v1.4.0 ecosystem index and Domain utilities family
@@ -31,7 +35,7 @@ semantic versioning after the first tagged release.
 - Replace archived monorepo links and completed execution artifacts with a
   standalone, human-oriented documentation structure.
 
-## 1.0.0 - 2026-08-25
+## 1.0.0 - 2026-08-26
 
 ### Changed
 
