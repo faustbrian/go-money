@@ -19,6 +19,26 @@ operations preserve currency and resolved context identity. Multiplication and
 division return `RationalMoney`; callers choose the context and rounding mode at
 the boundary where a fixed amount is required.
 
+## Status, lifecycle, and platform
+
+The module is stable at v1 and requires Go 1.26.6. It is portable Go and does
+not require an operating-system service or a network connection. Operations do
+not start background work or acquire resources that callers must close. A
+supplied context bounds cancellation only for the operation that receives it.
+
+## When to use it
+
+Use `money` when monetary values must remain exact and currency, precision,
+rounding, allocation, or conversion policy must be explicit. Use the package
+for value calculations and persistence boundaries, with exchange rates and
+business rules supplied by the caller.
+
+## When not to use it
+
+Do not use it as an exchange-rate client, pricing or accounting system, payment
+processor, currency registry, or process-wide monetary configuration. Do not
+use it when binary floating-point inputs or implicit rounding are required.
+
 ## Install
 
 ```sh
@@ -80,7 +100,10 @@ See [docs/api.md](docs/api.md),
 ## Documentation
 
 Use the [documentation index](docs/README.md) for package-owned guides,
-operational contracts, examples, and maintainer references.
+operational contracts, [executable examples](examples_test.go), and maintainer
+references. See the [FAQ and troubleshooting guide](docs/faq.md),
+[support policy](SUPPORT.md), and [security policy](SECURITY.md) for help and
+reporting routes.
 
 For ecosystem-wide selection and ownership guidance, see the versioned
 [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md)
