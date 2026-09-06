@@ -23,6 +23,10 @@ semantic versioning after the first tagged release.
 
 ### Documentation
 
+- Correct the support and security policies for the published stable v1 line,
+  document sentinel-based error classification and permanent local rejection
+  semantics, and add bounded troubleshooting and retry guidance.
+
 - Document the stable-v1 lifecycle and platform boundaries, package selection,
   executable examples, and troubleshooting, with actionable support and
   private security-reporting routes.

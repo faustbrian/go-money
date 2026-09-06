@@ -79,6 +79,22 @@ _ = result.Inexact()
   source metadata. There is no live FX client.
 - Versioned JSON and SQL representations encode amounts as strings.
 
+## Errors and retry policy
+
+The root package exposes sentinel errors for invalid currencies, contexts,
+values, rates, allocations, precision, and configured limits. Errors may carry
+operation context, so classify them with `errors.Is` rather than matching error
+text. The `encoding` and `format` packages similarly expose
+`ErrInvalidEncoding` and `ErrInvalidFormat`.
+
+Validation failures, identity mismatches, precision loss, and limit errors are
+permanent local rejections for the same inputs and policy. Retrying them without
+changing the value, context, currency, rate, allocation, or configured bound
+cannot succeed. A cancellation or deadline error may be retried only as a new,
+explicitly bounded operation when the caller's higher-level policy permits it.
+The module performs no network access and has no internal transient-error or
+retry state.
+
 ## Packages
 
 - `money`: values, contexts, arithmetic, allocation, tax, discount, and FX.

@@ -2,8 +2,10 @@
 
 ## Supported versions
 
-Security fixes are made on the latest supported major version. Before the
-first tagged release, the current `main` branch is the supported line.
+The stable v1 release line is supported. Users should run the latest published
+v1 patch because security fixes are not promised for superseded patch releases.
+The `main` branch is unreleased development and is not a supported deployment
+target.
 
 ## Reporting
 
