@@ -7,7 +7,7 @@
 [![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
 [![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money.svg)](https://pkg.go.dev/github.com/faustbrian/go-money)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-money?sort=semver)](https://github.com/faustbrian/go-money/releases)
-[![Go](https://img.shields.io/badge/go-1.26.6-00ADD8?logo=go)](https://go.dev/)
+[![Go](https://img.shields.io/badge/go-1.27.0-00ADD8?logo=go)](https://go.dev/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 `money` is an immutable exact monetary value package. It delegates decimal,
@@ -21,7 +21,7 @@ the boundary where a fixed amount is required.
 
 ## Status, lifecycle, and platform
 
-The module is stable at v1 and requires Go 1.26.6. It is portable Go and does
+The module is stable at v1 and requires Go 1.27.0. It is portable Go and does
 not require an operating-system service or a network connection. Operations do
 not start background work or acquire resources that callers must close. A
 supplied context bounds cancellation only for the operation that receives it.
