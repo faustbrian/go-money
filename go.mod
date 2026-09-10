@@ -1,6 +1,6 @@
 module github.com/faustbrian/go-money
 
-go 1.26.6
+go 1.27.0
 
 require (
 	github.com/Rhymond/go-money v1.0.15
