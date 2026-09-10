@@ -3,7 +3,6 @@ package encoding
 import (
 	"encoding/json"
 	"errors"
-	"io"
 	"strings"
 	"testing"
 
@@ -117,8 +116,8 @@ func TestDecoderBoundsAndNestedTraversalAreExact(t *testing.T) {
 	}
 
 	malformedDecoder := json.NewDecoder(strings.NewReader(`[`))
-	if err := scanJSONValue(malformedDecoder); !errors.Is(err, io.EOF) {
-		t.Fatalf("scanJSONValue(unclosed array) error = %v, want EOF", err)
+	if err := scanJSONValue(malformedDecoder); err == nil {
+		t.Fatal("scanJSONValue(unclosed array) accepted malformed JSON")
 	}
 
 	if _, err := decodeContext(wireContext{

@@ -125,23 +125,26 @@ func scanJSONValue(decoder *json.Decoder) error {
 				return ErrInvalidEncoding
 			}
 			seen[key] = struct{}{}
-			if valueErr := scanJSONValue(decoder); valueErr != nil {
+			valueErr := scanJSONValue(decoder)
+			switch valueErr {
+			case nil:
+			default:
 				return valueErr
 			}
 		}
 	case '[':
 		for decoder.More() {
-			if valueErr := scanJSONValue(decoder); valueErr != nil {
+			valueErr := scanJSONValue(decoder)
+			switch valueErr {
+			case nil:
+			default:
 				return valueErr
 			}
 		}
 	}
 	closing, err := decoder.Token()
-	if err != nil {
-		return err
-	}
 
-	return validateClosingDelimiter(delimiter, closing)
+	return errors.Join(err, validateClosingDelimiter(delimiter, closing))
 }
 
 func validateClosingDelimiter(open json.Delim, closing json.Token) error {
