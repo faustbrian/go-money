@@ -5,6 +5,16 @@ semantic versioning after the first tagged release.
 
 ## Unreleased
 
+### Security
+
+- Prepare planned v2 fail-closed resource admission for typed decimal and
+  integer operands, SQL and PostgreSQL scanner inputs, and total money-bag
+  constructor inputs before copying, formatting, or iterative combination.
+
+- Preserve released v1 documentation and compatibility while recording the
+  planned `/v2` semantic import path and separate active API baseline; direct
+  consumers remain on v1 until publication.
+
 ### Changed
 
 - Adopt the checksum-verified `go-library-tools` v1.4.0 CLI and immutable

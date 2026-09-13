@@ -11,7 +11,7 @@ import (
 	"io"
 
 	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-money"
+	"github.com/faustbrian/go-money/v2"
 )
 
 const (
@@ -191,8 +191,14 @@ func (value *SQLMoney) Scan(source any) error {
 	var data []byte
 	switch source := source.(type) {
 	case string:
+		if len(source) > MaxEncodedBytes {
+			return ErrInvalidEncoding
+		}
 		data = []byte(source)
 	case []byte:
+		if len(source) > MaxEncodedBytes {
+			return ErrInvalidEncoding
+		}
 		data = append([]byte(nil), source...)
 	default:
 		return ErrInvalidEncoding
@@ -222,8 +228,14 @@ func ScanNumeric(source any, code currency.Code, context money.Context) (money.M
 	var text string
 	switch source := source.(type) {
 	case string:
+		if len(source) > money.MaxAmountDigits+2 {
+			return money.Money{}, ErrInvalidEncoding
+		}
 		text = source
 	case []byte:
+		if len(source) > money.MaxAmountDigits+2 {
+			return money.Money{}, ErrInvalidEncoding
+		}
 		text = string(source)
 	default:
 		return money.Money{}, ErrInvalidEncoding

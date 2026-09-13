@@ -8,7 +8,7 @@ import (
 	"github.com/faustbrian/go-international/currency"
 )
 
-// MaxMoneyBagEntries bounds heterogeneous output and lookup work.
+// MaxMoneyBagEntries bounds input, heterogeneous output, and lookup work.
 const MaxMoneyBagEntries = 1_000
 
 // MoneyBag is an immutable deterministic collection keyed by exact currency
@@ -17,6 +17,9 @@ type MoneyBag struct{ values []Money }
 
 // NewMoneyBag validates and combines values with identical identities.
 func NewMoneyBag(values ...Money) (MoneyBag, error) {
+	if len(values) > MaxMoneyBagEntries {
+		return MoneyBag{}, ErrMoneyBagLimit
+	}
 	bag := MoneyBag{}
 	var err error
 	for _, value := range values {

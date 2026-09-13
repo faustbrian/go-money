@@ -4,7 +4,7 @@ package moneytest
 
 import (
 	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-money"
+	"github.com/faustbrian/go-money/v2"
 )
 
 // TestingT is the subset of testing.TB used by assertions.

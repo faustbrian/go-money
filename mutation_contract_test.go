@@ -10,6 +10,7 @@ import (
 
 	"github.com/faustbrian/go-international/currency"
 	gomath "github.com/faustbrian/go-math"
+	"github.com/faustbrian/go-math/decimal"
 	"github.com/faustbrian/go-math/integer"
 	"github.com/faustbrian/go-math/rational"
 )
@@ -73,6 +74,37 @@ func TestInclusivePublicBoundsRemainUsable(t *testing.T) {
 	}
 	if _, err := ParseTaxRate("10"); err != nil {
 		t.Fatalf("ParseTaxRate(10) error = %v", err)
+	}
+}
+
+func TestTypedNumericInputsAreBoundedBeforeFormatting(t *testing.T) {
+	t.Parallel()
+
+	limits := gomath.DefaultLimits()
+	limits.MaxInputDigits = 10_000
+	limits.MaxOutputDigits = 10_000
+	limits.MaxIntermediateBits = 20_000
+	hugeCoefficient := new(big.Int).Lsh(big.NewInt(1), 10_000)
+	hugeInteger, err := integer.FromBig(hugeCoefficient, limits)
+	if err != nil {
+		t.Fatal(err)
+	}
+	hugeDecimal, err := decimal.FromBig(hugeCoefficient, -2, limits)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	euro, _ := currency.Parse("EUR")
+	monetaryContext, _ := DefaultContext(euro)
+	value, _ := Parse("1.00", euro, monetaryContext)
+	if _, err := AmountFromDecimal(hugeDecimal); !errors.Is(err, ErrAmountLimit) {
+		t.Fatalf("AmountFromDecimal(huge typed value) error = %v", err)
+	}
+	if _, err := FromMinorUnits(hugeInteger, euro, monetaryContext); !errors.Is(err, ErrAmountLimit) {
+		t.Fatalf("FromMinorUnits(huge typed value) error = %v", err)
+	}
+	if _, err := value.Allocate(context.Background(), []integer.Integer{hugeInteger}); !errors.Is(err, ErrInvalidAllocation) {
+		t.Fatalf("Allocate(huge typed ratio) error = %v", err)
 	}
 }
 

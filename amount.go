@@ -30,6 +30,9 @@ func AmountFromDecimal(value decimal.Decimal) (Amount, error) {
 	if value.Scale() < 0 || value.Scale() > int32(MaxScale) {
 		return Amount{}, ErrAmountLimit
 	}
+	if _, err := value.AddExact(context.Background(), decimal.New(0), arithmeticLimits()); err != nil {
+		return Amount{}, ErrAmountLimit
+	}
 	digits := strings.TrimPrefix(strings.ReplaceAll(value.String(), ".", ""), "-")
 	if len(digits) > MaxAmountDigits {
 		return Amount{}, ErrAmountLimit

@@ -39,7 +39,11 @@ func Parse(input string, code currency.Code, context Context) (Money, error) {
 
 	resolved := context
 	if context.kind == ContextAutomatic {
-		resolved.scale = uint8(amount.Scale())
+		scale := amount.Scale()
+		if scale < 0 || scale > int32(MaxScale) {
+			return Money{}, ErrAmountLimit
+		}
+		resolved.scale = uint8(scale)
 	} else {
 		if amount.Scale() > int32(context.scale) {
 			return Money{}, ErrPrecisionLoss

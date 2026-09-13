@@ -1,6 +1,7 @@
 package money
 
 import (
+	stdcontext "context"
 	"strings"
 
 	"github.com/faustbrian/go-international/currency"
@@ -12,6 +13,9 @@ import (
 func FromMinorUnits(units integer.Integer, code currency.Code, context Context) (Money, error) {
 	if context.IsZero() || context.kind == ContextAutomatic {
 		return Money{}, ErrInvalidContext
+	}
+	if _, err := units.Add(stdcontext.Background(), integer.Zero(), arithmeticLimits()); err != nil {
+		return Money{}, ErrAmountLimit
 	}
 
 	return Parse(decimalTextFromMinor(units.String(), context.scale), code, context)
