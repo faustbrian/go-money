@@ -6,8 +6,8 @@ github.com/faustbrian/go-config v1.0.0 h1:jM5qlZmMbcLmo/SZmB5gRs4BoZIRdLg3ZXjSfk
 github.com/faustbrian/go-config v1.0.0/go.mod h1:pnqiOzoqa91gG8gWhQI7S1BXuE/E0DKRCOh19SQ3qYc=
 github.com/faustbrian/go-international v1.0.0 h1:8Ejpkxx86m2gG7jWlGjyYJqsVdXvNfqliVMwAM3hr0E=
 github.com/faustbrian/go-international v1.0.0/go.mod h1:7joB3RlwoD7o19uKkQB+8o1Zd1CfSfpH1eOSNtbrcRc=
-github.com/faustbrian/go-math v1.0.0 h1:jlU46betpxrbjcZXlhYTmAXCjWwsObwgd/+wCPlE51U=
-github.com/faustbrian/go-math v1.0.0/go.mod h1:ng3bXTchmlJz/xcXY87ZHFDdd3WUrDhPUaFEytofbBg=
+github.com/faustbrian/go-math v1.1.0 h1:j4eaCuP1oYG3Gh69rbrFOEjg1OxgYa1xoXmbYycgwH0=
+github.com/faustbrian/go-math v1.1.0/go.mod h1:ng3bXTchmlJz/xcXY87ZHFDdd3WUrDhPUaFEytofbBg=
 github.com/govalues/decimal v0.1.36 h1:dojDpsSvrk0ndAx8+saW5h9WDIHdWpIwrH/yhl9olyU=
 github.com/govalues/decimal v0.1.36/go.mod h1:Ee7eI3Llf7hfqDZtpj8Q6NCIgJy1iY3kH1pSwDrNqlM=
 github.com/govalues/money v0.2.4 h1:UpHB7s77OmOid6DBf8FWJoojTu2e+oTw2JA4G+VRVxs=
