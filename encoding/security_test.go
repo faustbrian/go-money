@@ -85,3 +85,27 @@ func TestSQLScanRejectsOversizedInputBeforeCopying(t *testing.T) {
 		})
 	}
 }
+
+func TestNumericScanRetainsInclusivePreconversionBoundary(t *testing.T) {
+	euro, err := currency.Parse("EUR")
+	if err != nil {
+		t.Fatal(err)
+	}
+	context, err := money.CustomContext(money.MaxScale)
+	if err != nil {
+		t.Fatal(err)
+	}
+	text := "-" + strings.Repeat("9", money.MaxAmountDigits-int(money.MaxScale)) + "." + strings.Repeat("9", int(money.MaxScale))
+	for _, source := range []any{text, []byte(text)} {
+		value, err := moneyencoding.ScanNumeric(source, euro, context)
+		if err != nil || value.Amount().String() != text || value.Context().Scale() != money.MaxScale {
+			t.Fatalf("ScanNumeric(%T exact boundary) changed amount or scale: %v", source, err)
+		}
+	}
+	for _, source := range []any{text + "0", []byte(text + "0")} {
+		value, err := moneyencoding.ScanNumeric(source, euro, context)
+		if !errors.Is(err, moneyencoding.ErrInvalidEncoding) || value.Valid() {
+			t.Fatalf("ScanNumeric(%T over boundary) error = %v", source, err)
+		}
+	}
+}

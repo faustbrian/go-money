@@ -3,7 +3,6 @@ package money
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/faustbrian/go-math/decimal"
 )
@@ -35,11 +34,6 @@ func AmountFromDecimal(value decimal.Decimal) (Amount, error) {
 	if _, err := value.Quantize(context.Background(), value.Scale(), decimal.Down, arithmeticLimits()); err != nil {
 		return Amount{}, ErrAmountLimit
 	}
-	digits := strings.TrimPrefix(strings.ReplaceAll(value.String(), ".", ""), "-")
-	if len(digits) > MaxAmountDigits {
-		return Amount{}, ErrAmountLimit
-	}
-
 	return Amount{value: value}, nil
 }
 

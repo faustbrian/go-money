@@ -240,10 +240,6 @@ func ScanNumeric(source any, code currency.Code, context money.Context) (money.M
 	default:
 		return money.Money{}, ErrInvalidEncoding
 	}
-	if len(text) > money.MaxAmountDigits+2 {
-		return money.Money{}, ErrInvalidEncoding
-	}
-
 	return money.Parse(text, code, context)
 }
 

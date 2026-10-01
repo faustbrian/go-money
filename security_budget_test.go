@@ -164,3 +164,47 @@ func TestAmountAdmissionPreservesDecimalRepresentation(t *testing.T) {
 		}
 	}
 }
+
+func TestAmountAdmissionRetainsPrintedDigitAndScaleBoundaries(t *testing.T) {
+	for _, text := range []string{
+		strings.Repeat("9", money.MaxAmountDigits),
+		"-" + strings.Repeat("9", money.MaxAmountDigits-int(money.MaxScale)) + "." + strings.Repeat("0", int(money.MaxScale)),
+		"0." + strings.Repeat("0", int(money.MaxScale)-1) + "1",
+		"0." + strings.Repeat("0", int(money.MaxScale)),
+	} {
+		value, err := decimal.Parse(text)
+		if err != nil {
+			t.Fatal(err)
+		}
+		amount, err := money.AmountFromDecimal(value)
+		if err != nil || amount.String() != text || amount.Scale() != value.Scale() {
+			t.Fatalf("AmountFromDecimal(%q) changed representation: %v", text, err)
+		}
+	}
+	for _, text := range []string{strings.Repeat("9", money.MaxAmountDigits+1), "0." + strings.Repeat("0", int(money.MaxScale)) + "1"} {
+		value, err := decimal.Parse(text)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := money.AmountFromDecimal(value); !errors.Is(err, money.ErrAmountLimit) {
+			t.Fatalf("AmountFromDecimal(over-boundary) error = %v", err)
+		}
+	}
+}
+
+func TestAutomaticContextResolvesOnlyAdmittedAmountScales(t *testing.T) {
+	euro, err := currency.Parse("EUR")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, text := range []string{"1", "1." + strings.Repeat("0", int(money.MaxScale))} {
+		value, err := money.Parse(text, euro, money.AutomaticContext())
+		if err != nil || value.Amount().String() != text || int32(value.Context().Scale()) != value.Amount().Scale() {
+			t.Fatalf("automatic Parse(%q) changed amount or scale: %v", text, err)
+		}
+	}
+	value, err := money.Parse("1."+strings.Repeat("0", int(money.MaxScale)+1), euro, money.AutomaticContext())
+	if err == nil || value.Valid() {
+		t.Fatal("automatic context admitted an excessive represented scale")
+	}
+}
