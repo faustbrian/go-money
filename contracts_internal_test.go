@@ -387,6 +387,19 @@ func TestCancellationPropagatesFromEveryBoundedArithmeticStage(t *testing.T) {
 	}
 }
 
+func TestAllocatePreservesCancellationDuringTypedRatioAdmission(t *testing.T) {
+	t.Parallel()
+
+	euro, _ := currency.Parse("EUR")
+	monetaryContext, _ := DefaultContext(euro)
+	value, _ := Parse("1.00", euro, monetaryContext)
+	ctx := &stagedCancellation{failAt: 2}
+
+	if _, err := value.Allocate(ctx, []integer.Integer{integer.New(1)}); !errors.Is(err, context.Canceled) {
+		t.Fatalf("Allocate(canceled during ratio admission) error = %v", err)
+	}
+}
+
 func TestCorruptInternalValuesFailClosedAtEveryNumericBoundary(t *testing.T) {
 	t.Parallel()
 

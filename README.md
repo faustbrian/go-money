@@ -21,10 +21,13 @@ the boundary where a fixed amount is required.
 
 ## Status, lifecycle, and platform
 
-The module is stable at v1 and requires Go 1.27.0. It is portable Go and does
-not require an operating-system service or a network connection. Operations do
-not start background work or acquire resources that callers must close. A
-supplied context bounds cancellation only for the operation that receives it.
+The published v1.0.0 module targets Go 1.26.6. Current `main` prepares the
+releasable v2.0.0 module and requires Go 1.27.0; v2 is not yet published or
+supported for production use.
+Both are portable Go and require no operating-system service or network
+connection. Operations do not start background work or acquire resources that
+callers must close. A supplied context bounds cancellation only for the
+operation that receives it.
 
 ## When to use it
 
@@ -42,8 +45,12 @@ use it when binary floating-point inputs or implicit rounding are required.
 ## Install
 
 ```sh
-go get github.com/faustbrian/go-money
+go get github.com/faustbrian/go-money@v1
 ```
+
+The planned, unreleased v2 source uses
+`github.com/faustbrian/go-money/v2`; keep consumers on v1 until a v2 release is
+published.
 
 ## Quick start
 
@@ -69,8 +76,8 @@ _ = result.Inexact()
 - Cross-currency or cross-context arithmetic returns an error.
 - Default scales come from authoritative ISO metadata; historic currencies are
   accepted only through the explicit historic parse policy.
-- Amount, scale, rate, ratio, allocation, output, and diagnostic work is
-  bounded.
+- Planned v2 bounds amount, scale, rate, ratio, allocation, bag-input,
+  persistence-input, output, and diagnostic work before expensive conversion.
 - Equal and weighted allocations distribute minor-unit remainders
   deterministically and conserve the source total.
 - Tax and discount results derive one component by subtraction, so their

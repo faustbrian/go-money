@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-money"
+	"github.com/faustbrian/go-money/v2"
 )
 
 func FuzzVersionedJSON(f *testing.F) {

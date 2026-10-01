@@ -6,7 +6,7 @@ import (
 
 	"github.com/faustbrian/go-international/currency"
 	gomath "github.com/faustbrian/go-math"
-	"github.com/faustbrian/go-money"
+	"github.com/faustbrian/go-money/v2"
 )
 
 func TestAssertionsReportEveryFailedLaw(t *testing.T) {

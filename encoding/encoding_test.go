@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-money"
-	moneyencoding "github.com/faustbrian/go-money/encoding"
+	"github.com/faustbrian/go-money/v2"
+	moneyencoding "github.com/faustbrian/go-money/v2/encoding"
 )
 
 func TestVersionedJSONAndSQLRoundTripHistoricMoneyExactly(t *testing.T) {

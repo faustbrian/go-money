@@ -1,9 +1,11 @@
 package money
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/faustbrian/go-international/currency"
+	gomath "github.com/faustbrian/go-math"
 	"github.com/faustbrian/go-math/integer"
 )
 
@@ -12,6 +14,20 @@ import (
 func FromMinorUnits(units integer.Integer, code currency.Code, context Context) (Money, error) {
 	if context.IsZero() || context.kind == ContextAutomatic {
 		return Money{}, ErrInvalidContext
+	}
+	if err := validateCurrencyContext(code, context); err != nil {
+		return Money{}, err
+	}
+
+	// Compare against a fixed monetary boundary before formatting a caller's
+	// arbitrary-precision coefficient. Negation copies only the fixed bound.
+	limits := arithmeticLimits()
+	limits.MaxInputDigits = MaxAmountDigits + 1
+	maximum := mustInvariant(integer.Parse("1"+strings.Repeat("0", MaxAmountDigits), integer.ParseOptions{
+		Base: 10, Limits: limits,
+	}))
+	if units.Cmp(maximum) >= 0 || units.Cmp(maximum.Neg()) <= 0 {
+		return Money{}, fmt.Errorf("money: parse amount: %w", gomath.ErrLimitExceeded)
 	}
 
 	return Parse(decimalTextFromMinor(units.String(), context.scale), code, context)

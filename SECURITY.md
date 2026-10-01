@@ -4,8 +4,8 @@
 
 The stable v1 release line is supported. Users should run the latest published
 v1 patch because security fixes are not promised for superseded patch releases.
-The `main` branch is unreleased development and is not a supported deployment
-target.
+The `main` branch contains planned v2 source with stricter fail-closed resource
+ceilings; it is unreleased and is not a supported deployment target.
 
 ## Reporting
 
@@ -17,9 +17,10 @@ production monetary payloads.
 
 ## Threat model
 
-Untrusted inputs may attempt excessive digits, scales, ratios, allocation
-counts, JSON nesting, locale expansion, or diagnostic amplification. Public
-parsers and adapters apply fixed bounds before or during expensive work.
+Untrusted inputs may attempt excessive digits, scales, ratios, allocation or
+bag counts, JSON nesting, persistence payloads, locale expansion, or diagnostic
+amplification. Planned v2 parsers, typed-value constructors, collections, and
+adapters apply fixed bounds before or during expensive work.
 
 The package performs no network access, loads no ambient currency rates, uses
 no unsafe code, and logs no monetary source records. Callers remain responsible

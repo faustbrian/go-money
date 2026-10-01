@@ -1,10 +1,27 @@
 package money
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/faustbrian/go-international/currency"
 )
+
+func TestNewMoneyBagRejectsExcessiveInputValues(t *testing.T) {
+	t.Parallel()
+
+	euro, _ := currency.Parse("EUR")
+	context, _ := DefaultContext(euro)
+	value, _ := Parse("1.00", euro, context)
+	values := make([]Money, MaxMoneyBagEntries+1)
+	for index := range values {
+		values[index] = value
+	}
+
+	if _, err := NewMoneyBag(values...); !errors.Is(err, ErrMoneyBagLimit) {
+		t.Fatalf("NewMoneyBag(MaxMoneyBagEntries+1 inputs) error = %v", err)
+	}
+}
 
 func TestMoneyBagCombinesOnlyIdenticalCurrencyAndContexts(t *testing.T) {
 	t.Parallel()
