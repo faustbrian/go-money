@@ -19,14 +19,14 @@ func FromMinorUnits(units integer.Integer, code currency.Code, context Context) 
 		return Money{}, err
 	}
 
-	// Compare against a fixed monetary boundary before formatting a caller's
-	// arbitrary-precision coefficient. Negation copies only the fixed bound.
+	// Compare against the greatest admitted coefficient before formatting a
+	// caller's arbitrary-precision value. Negation copies only the fixed bound.
 	limits := arithmeticLimits()
 	limits.MaxInputDigits = MaxAmountDigits + 1
-	maximum := mustInvariant(integer.Parse("1"+strings.Repeat("0", MaxAmountDigits), integer.ParseOptions{
+	maximum := mustInvariant(integer.Parse(strings.Repeat("9", MaxAmountDigits), integer.ParseOptions{
 		Base: 10, Limits: limits,
 	}))
-	if units.Cmp(maximum) >= 0 || units.Cmp(maximum.Neg()) <= 0 {
+	if units.Cmp(maximum) > 0 || units.Cmp(maximum.Neg()) < 0 {
 		return Money{}, fmt.Errorf("money: parse amount: %w", gomath.ErrLimitExceeded)
 	}
 

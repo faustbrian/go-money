@@ -208,3 +208,62 @@ func TestAutomaticContextResolvesOnlyAdmittedAmountScales(t *testing.T) {
 		t.Fatal("automatic context admitted an excessive represented scale")
 	}
 }
+
+func TestMinorUnitPowerBoundaryPreservesRejectionAndMetadata(t *testing.T) {
+	euro, err := currency.Parse("EUR")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fixed, err := money.CustomContext(0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, sign := range []string{"", "-"} {
+		text := sign + "1" + strings.Repeat("0", money.MaxAmountDigits)
+		units, err := integer.Parse(text, integer.ParseOptions{Base: 10, Limits: gomath.DefaultLimits()})
+		if err != nil {
+			t.Fatal(err)
+		}
+		value, err := money.FromMinorUnits(units, euro, fixed)
+		if !errors.Is(err, gomath.ErrLimitExceeded) || value.Valid() {
+			t.Fatalf("FromMinorUnits(power boundary) error = %v", err)
+		}
+		if strings.Contains(err.Error(), text) {
+			t.Fatal("minor-unit rejection disclosed the source coefficient")
+		}
+		value, err = money.FromMinorUnits(units, currency.Code{}, fixed)
+		if !errors.Is(err, money.ErrUnknownCurrency) || value.Valid() {
+			t.Fatalf("FromMinorUnits(power boundary, unknown currency) error = %v", err)
+		}
+		value, err = money.FromMinorUnits(units, euro, money.AutomaticContext())
+		if !errors.Is(err, money.ErrInvalidContext) || value.Valid() {
+			t.Fatalf("FromMinorUnits(power boundary, automatic context) error = %v", err)
+		}
+	}
+}
+
+func TestMinorUnitsAcceptGreatestAdmittedCoefficient(t *testing.T) {
+	euro, err := currency.Parse("EUR")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fixed, err := money.CustomContext(0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, sign := range []string{"", "-"} {
+		text := sign + strings.Repeat("9", money.MaxAmountDigits)
+		units, err := integer.Parse(text, integer.ParseOptions{Base: 10, Limits: gomath.DefaultLimits()})
+		if err != nil {
+			t.Fatal(err)
+		}
+		value, err := money.FromMinorUnits(units, euro, fixed)
+		if err != nil || !value.Valid() {
+			t.Fatalf("greatest admitted coefficient = %v, valid=%t", err, value.Valid())
+		}
+		retained, err := value.MinorUnits()
+		if err != nil || retained.Cmp(units) != 0 {
+			t.Fatalf("admitted coefficient changed: %v", err)
+		}
+	}
+}

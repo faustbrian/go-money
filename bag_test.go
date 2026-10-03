@@ -23,6 +23,33 @@ func TestNewMoneyBagRejectsExcessiveInputValues(t *testing.T) {
 	}
 }
 
+func TestNewMoneyBagAcceptsExactInputLimitAndConservesTotal(t *testing.T) {
+	euro, err := currency.Parse("EUR")
+	if err != nil {
+		t.Fatal(err)
+	}
+	context, err := DefaultContext(euro)
+	if err != nil {
+		t.Fatal(err)
+	}
+	value, err := Parse("1.00", euro, context)
+	if err != nil {
+		t.Fatal(err)
+	}
+	values := make([]Money, MaxMoneyBagEntries)
+	for index := range values {
+		values[index] = value
+	}
+	bag, err := NewMoneyBag(values...)
+	if err != nil {
+		t.Fatalf("NewMoneyBag(exact input limit) error = %v", err)
+	}
+	total, ok := bag.Get(euro, context)
+	if !ok || total.String() != "1000.00 EUR" || len(bag.Values()) != 1 {
+		t.Fatalf("exact-limit bag did not conserve combined amount: %s", total)
+	}
+}
+
 func TestMoneyBagCombinesOnlyIdenticalCurrencyAndContexts(t *testing.T) {
 	t.Parallel()
 
