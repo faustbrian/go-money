@@ -2,10 +2,10 @@
 
 ## Supported versions
 
-The stable v1 release line is supported. Users should run the latest published
-v1 patch because security fixes are not promised for superseded patch releases.
-The `main` branch contains planned v2 source with stricter fail-closed resource
-ceilings; it is unreleased and is not a supported deployment target.
+The stable v1 and v2 release lines are supported. Users should run the latest
+published patch in their selected major line because security fixes are not
+promised for superseded patch releases. Published v2.0.0 adds stricter
+fail-closed resource ceilings; mutable `main` is not a deployment target.
 
 ## Reporting
 
@@ -19,7 +19,7 @@ production monetary payloads.
 
 Untrusted inputs may attempt excessive digits, scales, ratios, allocation or
 bag counts, JSON nesting, persistence payloads, locale expansion, or diagnostic
-amplification. Planned v2 parsers, typed-value constructors, collections, and
+amplification. V2 parsers, typed-value constructors, collections, and
 adapters apply fixed bounds before or during expensive work.
 
 The package performs no network access, loads no ambient currency rates, uses

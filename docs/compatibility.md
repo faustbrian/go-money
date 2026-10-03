@@ -1,21 +1,21 @@
 # Compatibility
 
-Current v2 source requires Go 1.27.0; published v1.0.0 targets Go 1.26.6.
+Published v2.0.0 requires Go 1.27.0; published v1.0.0 targets Go 1.26.6.
 The released v1 public API remains
-captured byte-for-byte in `api/v1.txt`. Planned v2 source uses the semantic
+captured byte-for-byte in `api/v1.txt`. Published v2 uses the semantic
 import path `github.com/faustbrian/go-money/v2`; its active compatibility
 baseline is `api/v2.txt`.
 
 The v2 boundary is required because rejecting more than
 `MaxMoneyBagEntries` total constructor inputs changes v1 acceptance behavior,
 even when duplicate identities would combine to fewer output entries. Existing
-consumers must remain on v1 until v2 is published, then opt in by updating
-imports and reviewing the documented ceilings.
+consumers can remain on v1 or opt in to published v2.0.0 by updating imports
+and reviewing the documented ceilings.
 
 The maintained `go-knapsack/objective/gomoney/v2` and
 `go-knapsack/objective/money/v2` modules and the `go-library-tools` release
 compatibility consumer still select `github.com/faustbrian/go-money` v1.0.0.
-Their adoption of Money v2 requires publication and separate consumer review;
+Their adoption of Money v2 requires separate consumer review and delivery;
 the released adapters expose nominal Money types, so changing those signatures
 requires their own major-version decision. Frozen historical compatibility
 cohorts remain unchanged.
