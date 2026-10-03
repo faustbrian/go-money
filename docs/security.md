@@ -1,7 +1,10 @@
 # Security model
 
-The released v1 line remains supported. This document also describes the
-stricter fail-closed ceilings in planned, unpublished v2 source.
+Model version: 2.0; release boundary: v2.0.0, published 2026-10-03.
+
+The released v1 line remains supported. This model describes the stricter
+fail-closed ceilings in published v2.0.0; it does not backport those guarantees
+to the distinct v1 release.
 
 ## Assets and trust boundaries
 
@@ -25,7 +28,7 @@ inputs and entries to 1,000, exchange-rate source attribution to 128 bytes,
 encoded and formatted values to 2,048 bytes, monetary intermediate arithmetic
 to 8,192 bits, and errors to fixed category strings. Rate magnitude defaults to
 1,000,000, tax rates to 10, and cash steps to 1,000,000,000,000,000,000.
-Planned v2 checks scanner byte lengths before copying and admits
+V2 checks scanner byte lengths before copying and admits
 typed decimal and integer operands under bounded arithmetic before converting
 them to text. JSON traversal is bounded by the encoded-byte ceiling, rejects
 duplicate keys and trailing data, and accepts only the versioned closed schema.
