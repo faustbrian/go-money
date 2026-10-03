@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-money"
+	"github.com/faustbrian/go-money/v2"
 )
 
 func TestEveryContextEncodingAndPersistenceBoundary(t *testing.T) {
@@ -208,5 +208,44 @@ func TestEncodingRejectsEveryInvalidShape(t *testing.T) {
 	}
 	if wrapContextError(money.ErrInvalidContext) == nil || wrapContextError(nil) != nil {
 		t.Error("wrapContextError contract failed")
+	}
+}
+
+func TestSQLMoneyScanRejectsOversizedInputsWithoutCopying(t *testing.T) {
+	oversizedText := strings.Repeat("x", MaxEncodedBytes+1)
+	oversizedBytes := []byte(oversizedText)
+
+	for _, source := range []any{oversizedText, oversizedBytes} {
+		var scanErr error
+		allocations := testing.AllocsPerRun(100, func() {
+			var value SQLMoney
+			scanErr = value.Scan(source)
+		})
+		if !errors.Is(scanErr, ErrInvalidEncoding) {
+			t.Fatalf("SQLMoney.Scan(%T) error = %v", source, scanErr)
+		}
+		if allocations != 0 {
+			t.Fatalf("SQLMoney.Scan(%T) allocations = %v, want 0", source, allocations)
+		}
+	}
+}
+
+func TestScanNumericRejectsOversizedInputsWithoutConverting(t *testing.T) {
+	euro, _ := currency.Parse("EUR")
+	monetaryContext, _ := money.DefaultContext(euro)
+	oversizedText := strings.Repeat("9", money.MaxAmountDigits+3)
+	oversizedBytes := []byte(oversizedText)
+
+	for _, source := range []any{oversizedText, oversizedBytes} {
+		var scanErr error
+		allocations := testing.AllocsPerRun(100, func() {
+			_, scanErr = ScanNumeric(source, euro, monetaryContext)
+		})
+		if !errors.Is(scanErr, ErrInvalidEncoding) {
+			t.Fatalf("ScanNumeric(%T) error = %v", source, scanErr)
+		}
+		if allocations != 0 {
+			t.Fatalf("ScanNumeric(%T) allocations = %v, want 0", source, allocations)
+		}
 	}
 }

@@ -5,14 +5,14 @@
   "modules": [
     {
       "directory": ".",
-      "module_path": "github.com/faustbrian/go-money",
+      "module_path": "github.com/faustbrian/go-money/v2",
       "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": ".",
           "directory": ".",
           "name": "money",
-          "import_path": "github.com/faustbrian/go-money",
+          "import_path": "github.com/faustbrian/go-money/v2",
           "kind": "public",
           "production": true,
           "executable": true,
@@ -24,7 +24,7 @@
           "module_directory": ".",
           "directory": "encoding",
           "name": "encoding",
-          "import_path": "github.com/faustbrian/go-money/encoding",
+          "import_path": "github.com/faustbrian/go-money/v2/encoding",
           "kind": "public",
           "production": true,
           "executable": true,
@@ -36,7 +36,7 @@
           "module_directory": ".",
           "directory": "format",
           "name": "format",
-          "import_path": "github.com/faustbrian/go-money/format",
+          "import_path": "github.com/faustbrian/go-money/v2/format",
           "kind": "public",
           "production": true,
           "executable": true,
@@ -48,7 +48,7 @@
           "module_directory": ".",
           "directory": "moneytest",
           "name": "moneytest",
-          "import_path": "github.com/faustbrian/go-money/moneytest",
+          "import_path": "github.com/faustbrian/go-money/v2/moneytest",
           "kind": "test support",
           "production": false,
           "executable": true,
@@ -65,7 +65,7 @@
       "family_label": "Domain Utilities",
       "family_description": "Domain-specific immutable values, algorithms, parsers, proofs, and calculations.",
       "family_order": 8,
-      "version": "1.0.0",
+      "version": "2.0.0",
       "tag_prefix": "v",
       "owned_dependencies": [
         "github.com/faustbrian/go-international",
@@ -105,13 +105,13 @@
         ],
         "public_package_identifier": "money",
         "primary_entry_packages": [
-          "github.com/faustbrian/go-money"
+          "github.com/faustbrian/go-money/v2"
         ],
         "package_selection": {
-          "github.com/faustbrian/go-money": "Use for immutable exact money, explicit contexts, arithmetic, allocation, tax, discount, and attributed currency conversion.",
-          "github.com/faustbrian/go-money/encoding": "Use for bounded versioned JSON, text, database/sql, and PostgreSQL numeric encodings of money values.",
-          "github.com/faustbrian/go-money/format": "Use for explicit locale-aware display of exact money values.",
-          "github.com/faustbrian/go-money/moneytest": "Use in tests for monetary fixtures and conservation assertions."
+          "github.com/faustbrian/go-money/v2": "Use for immutable exact money, explicit contexts, arithmetic, allocation, tax, discount, and attributed currency conversion.",
+          "github.com/faustbrian/go-money/v2/encoding": "Use for bounded versioned JSON, text, database/sql, and PostgreSQL numeric encodings of money values.",
+          "github.com/faustbrian/go-money/v2/format": "Use for explicit locale-aware display of exact money values.",
+          "github.com/faustbrian/go-money/v2/moneytest": "Use in tests for monetary fixtures and conservation assertions."
         },
         "lifecycle_status": "active",
         "maturity": "stable",
@@ -134,9 +134,9 @@
         "optional_owned_dependencies": [],
         "adapters": [],
         "companions": [
-          "github.com/faustbrian/go-money/encoding",
-          "github.com/faustbrian/go-money/format",
-          "github.com/faustbrian/go-money/moneytest"
+          "github.com/faustbrian/go-money/v2/encoding",
+          "github.com/faustbrian/go-money/v2/format",
+          "github.com/faustbrian/go-money/v2/moneytest"
         ],
         "supported_go": {
           "minimum": "1.27.0",
@@ -165,14 +165,14 @@
           "examples": "examples_test.go",
           "faq": "docs/faq.md",
           "changelog": "CHANGELOG.md",
-          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-money",
+          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-money/v2",
           "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
         },
         "known_good_compatibility_sets": [],
         "delivery": {
-          "implementation": "not-started",
-          "hardening": "not-started",
-          "release": "not-started"
+          "implementation": "in-progress",
+          "hardening": "in-progress",
+          "release": "in-progress"
         }
       },
       "gates": {

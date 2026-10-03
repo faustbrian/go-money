@@ -5,7 +5,26 @@ semantic versioning after the first tagged release.
 
 ## Unreleased
 
+## 2.0.0 - 2026-10-01
+
+### Security
+
+- Bound v2 resource admission for typed decimal and
+  integer operands, SQL and PostgreSQL scanner inputs, and total money-bag
+  constructor inputs before copying, formatting, or iterative combination.
+
+- Preserve released v1 documentation and compatibility while recording the
+  `/v2` semantic import path and separate active API baseline; direct
+  consumers remain on v1 until publication.
+
+- Preserve the 256-digit amount boundary at scales 0 and 18, exact decimal
+  representation, allocation conservation, and currency/context error
+  precedence while rejecting typed numeric inputs before formatting.
+
 ### Changed
+
+- Adopt the published Math v1.1.2 arithmetic-budget and rounding fixes while
+  retaining Money's exact amounts, contexts, and persistence representation.
 
 - Adopt the checksum-verified `go-library-tools` v1.4.0 CLI and immutable
   reusable workflow, enforce the schema-v2 cohesion contract through the local
