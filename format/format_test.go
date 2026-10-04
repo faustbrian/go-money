@@ -5,8 +5,8 @@ import (
 
 	"github.com/faustbrian/go-international/currency"
 	"github.com/faustbrian/go-international/locale"
-	"github.com/faustbrian/go-money"
-	moneyformat "github.com/faustbrian/go-money/format"
+	"github.com/faustbrian/go-money/v2"
+	moneyformat "github.com/faustbrian/go-money/v2/format"
 )
 
 func TestLocaleFormattingKeepsExactValueAndSeparateIdentity(t *testing.T) {

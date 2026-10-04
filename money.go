@@ -22,14 +22,8 @@ type Money struct {
 // places beyond their scale, including trailing zeroes, rather than silently
 // normalizing a context difference.
 func Parse(input string, code currency.Code, context Context) (Money, error) {
-	if code.IsZero() {
-		return Money{}, ErrUnknownCurrency
-	}
-	if context.IsZero() || context.scale > MaxScale {
-		return Money{}, ErrInvalidContext
-	}
-	if context.kind == ContextDefault && context.currency != code {
-		return Money{}, ErrContextMismatch
+	if err := validateCurrencyContext(code, context); err != nil {
+		return Money{}, err
 	}
 
 	amount, err := ParseAmount(input)
@@ -39,7 +33,8 @@ func Parse(input string, code currency.Code, context Context) (Money, error) {
 
 	resolved := context
 	if context.kind == ContextAutomatic {
-		resolved.scale = uint8(amount.Scale())
+		scale := amount.Scale()
+		resolved.scale = uint8(scale)
 	} else {
 		if amount.Scale() > int32(context.scale) {
 			return Money{}, ErrPrecisionLoss

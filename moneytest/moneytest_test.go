@@ -6,8 +6,8 @@ import (
 
 	"github.com/faustbrian/go-international/currency"
 	"github.com/faustbrian/go-math/integer"
-	"github.com/faustbrian/go-money"
-	"github.com/faustbrian/go-money/moneytest"
+	"github.com/faustbrian/go-money/v2"
+	"github.com/faustbrian/go-money/v2/moneytest"
 )
 
 func TestFixturesAndConservationAssertionsCoverCurrencyEdges(t *testing.T) {

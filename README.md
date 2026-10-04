@@ -5,7 +5,7 @@
 [![Coverage](https://img.shields.io/badge/coverage-100%25_required-blue)](CONTRIBUTING.md#verification)
 [![Mutation](https://img.shields.io/badge/mutation-100%25_required-blue)](CONTRIBUTING.md#verification)
 [![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
-[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money.svg)](https://pkg.go.dev/github.com/faustbrian/go-money)
+[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money/v2.svg)](https://pkg.go.dev/github.com/faustbrian/go-money/v2)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-money?sort=semver)](https://github.com/faustbrian/go-money/releases)
 [![Go](https://img.shields.io/badge/go-1.27.0-00ADD8?logo=go)](https://go.dev/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -21,10 +21,13 @@ the boundary where a fixed amount is required.
 
 ## Status, lifecycle, and platform
 
-The module is stable at v1 and requires Go 1.27.0. It is portable Go and does
-not require an operating-system service or a network connection. Operations do
-not start background work or acquire resources that callers must close. A
-supplied context bounds cancellation only for the operation that receives it.
+The published v2.0.0 module requires Go 1.27.0. The supported v1.0.0 module
+targets Go 1.26.6. Use a published tag rather than mutable `main` source for
+deployment.
+Both are portable Go and require no operating-system service or network
+connection. Operations do not start background work or acquire resources that
+callers must close. A supplied context bounds cancellation only for the
+operation that receives it.
 
 ## When to use it
 
@@ -42,8 +45,12 @@ use it when binary floating-point inputs or implicit rounding are required.
 ## Install
 
 ```sh
-go get github.com/faustbrian/go-money
+go get github.com/faustbrian/go-money/v2@v2.0.0
 ```
+
+The [v2.0.0 release](https://github.com/faustbrian/go-money/releases/tag/v2.0.0)
+uses `github.com/faustbrian/go-money/v2`. Existing v1 consumers can retain
+their release or follow the [major-version migration guide](docs/compatibility.md).
 
 ## Quick start
 
@@ -69,8 +76,8 @@ _ = result.Inexact()
 - Cross-currency or cross-context arithmetic returns an error.
 - Default scales come from authoritative ISO metadata; historic currencies are
   accepted only through the explicit historic parse policy.
-- Amount, scale, rate, ratio, allocation, output, and diagnostic work is
-  bounded.
+- V2 bounds amount, scale, rate, ratio, allocation, bag-input,
+  persistence-input, output, and diagnostic work before expensive conversion.
 - Equal and weighted allocations distribute minor-unit remainders
   deterministically and conserve the source total.
 - Tax and discount results derive one component by subtraction, so their

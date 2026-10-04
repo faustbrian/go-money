@@ -7,7 +7,7 @@ import (
 
 	"github.com/faustbrian/go-international/currency"
 	"github.com/faustbrian/go-international/locale"
-	"github.com/faustbrian/go-money"
+	"github.com/faustbrian/go-money/v2"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )

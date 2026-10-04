@@ -100,7 +100,16 @@ func (money Money) Allocate(ctx context.Context, ratios []integer.Integer) (Allo
 
 	sum := integer.Zero()
 	for _, ratio := range ratios {
-		if ratio.Sign() <= 0 || len(strings.TrimPrefix(ratio.String(), "-")) > MaxRatioDigits {
+		if ratio.Sign() <= 0 {
+			return AllocationResult{}, ErrInvalidAllocation
+		}
+		if _, err := ratio.Add(ctx, integer.Zero(), arithmeticLimits()); err != nil {
+			if cancellationErr := ctx.Err(); cancellationErr != nil {
+				return AllocationResult{}, cancellationErr
+			}
+			return AllocationResult{}, ErrInvalidAllocation
+		}
+		if len(strings.TrimPrefix(ratio.String(), "-")) > MaxRatioDigits {
 			return AllocationResult{}, ErrInvalidAllocation
 		}
 		var err error

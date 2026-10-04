@@ -10,6 +10,19 @@ const MaxScale uint8 = 18
 // MaxCashStep bounds cash increments expressed at their context scale.
 const MaxCashStep uint64 = 1_000_000_000_000_000_000
 
+func validateCurrencyContext(code currency.Code, context Context) error {
+	if code.IsZero() {
+		return ErrUnknownCurrency
+	}
+	if context.IsZero() || context.scale > MaxScale {
+		return ErrInvalidContext
+	}
+	if context.kind == ContextDefault && context.currency != code {
+		return ErrContextMismatch
+	}
+	return nil
+}
+
 // ContextKind identifies the monetary precision policy without carrying
 // currency metadata into the arithmetic layer.
 type ContextKind uint8

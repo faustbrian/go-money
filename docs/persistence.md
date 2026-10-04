@@ -14,6 +14,8 @@ accepted explicitly during reconstruction.
 `SQLMoney` implements `database/sql.Scanner` and `driver.Valuer` using the same
 versioned representation. `NumericValue` and `ScanNumeric` support PostgreSQL
 `numeric` columns when currency and context are stored in separate columns.
+Planned v2 rejects oversized string and byte scanner inputs before copying or
+converting them.
 
 Recommended schema fields are version, exact numeric/text amount, currency code,
 context kind, scale, cash step, and any business-level rounding or rate metadata.
