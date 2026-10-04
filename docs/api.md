@@ -34,6 +34,6 @@ conditions.
 `Convert` requires an `ExchangeRate` containing base, quote, exact rate,
 observation time, and bounded source attribution.
 
-Use `go doc github.com/faustbrian/go-money` for signatures and package-level
-examples from the released v1 line. Planned v2 source uses the `/v2` semantic
-import path but is not published yet.
+Use `go doc github.com/faustbrian/go-money/v2` for current v2 signatures and
+package-level examples. The v2.0.0 module is published; released v1 code
+remains available under `github.com/faustbrian/go-money`.
