@@ -7,6 +7,9 @@ semantic versioning after the first tagged release.
 
 ### Changed
 
+- Update International to v1.1.0 for the maintained currency and locale
+  dependency.
+
 - Update the locale-formatting dependency `golang.org/x/text` to v0.42.0
   without changing Money's exact amounts, currency identity, or persistence
   representation.
