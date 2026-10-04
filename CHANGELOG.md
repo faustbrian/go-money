@@ -5,6 +5,8 @@ semantic versioning after the first tagged release.
 
 ## Unreleased
 
+## 2.0.1 - 2026-10-04
+
 ### Changed
 
 - Update International to v1.1.0 for the maintained currency and locale
