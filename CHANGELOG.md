@@ -5,6 +5,12 @@ semantic versioning after the first tagged release.
 
 ## Unreleased
 
+### Changed
+
+- Update the locale-formatting dependency `golang.org/x/text` to v0.42.0
+  without changing Money's exact amounts, currency identity, or persistence
+  representation.
+
 ## 2.0.0 - 2026-10-01
 
 ### Security
