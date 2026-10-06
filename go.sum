@@ -8,8 +8,8 @@ github.com/faustbrian/go-config v1.0.0 h1:jM5qlZmMbcLmo/SZmB5gRs4BoZIRdLg3ZXjSfk
 github.com/faustbrian/go-config v1.0.0/go.mod h1:pnqiOzoqa91gG8gWhQI7S1BXuE/E0DKRCOh19SQ3qYc=
 github.com/faustbrian/go-international v1.1.0 h1:YYBQTSdQOwS7/8GLDo/vf+xbr1uNLhIEEQfWzc6C+o0=
 github.com/faustbrian/go-international v1.1.0/go.mod h1:aua0cfp9flc3KclSm5trYa3pSekqhXeqhxOeTwY/OCk=
-github.com/faustbrian/go-math v1.1.2 h1:cH0VSYu/u6Xwc/NGDwbEUQEKpvIjNFOH/suiFIBLHbI=
-github.com/faustbrian/go-math v1.1.2/go.mod h1:e7fzSBNkWWq+1EsCSjpvjIAc//nJAS/iRU4Qc87TfTU=
+github.com/faustbrian/go-math v1.1.3 h1:BM+SdohFAirzfk+qVeER0F6TYC8/sniQFtc1bS8Y+BM=
+github.com/faustbrian/go-math v1.1.3/go.mod h1:e7fzSBNkWWq+1EsCSjpvjIAc//nJAS/iRU4Qc87TfTU=
 github.com/faustbrian/go-validation v1.1.0 h1:nGpU161/dzIkp5L/tAGJSHpCOa81hqcPM6lxt8aCJ9k=
 github.com/faustbrian/go-validation v1.1.0/go.mod h1:oSoKEITwgaCzWpdgdxrV+Q6QPpteJJvRldAeOZL9Plg=
 github.com/faustbrian/go-wire v1.0.0 h1:vVniAQ0+dtWPlYvLzJc4xM74oyZ4ZGo5IvQKBTO6UyM=
