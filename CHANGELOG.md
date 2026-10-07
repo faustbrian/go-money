@@ -5,6 +5,15 @@ semantic versioning after the first tagged release.
 
 ## Unreleased
 
+## 2.0.2 - 2026-10-07
+
+### Changed
+
+- Adopt the compatible Math v1.1.3 maintenance release without changing exact
+  amounts, rounding, allocation, currency identity, or persistence formats.
+- Keep reusable CI and setup tooling on one immutable source while retaining
+  the configured v1.4.0 CLI.
+
 ## 2.0.1 - 2026-10-04
 
 ### Changed
