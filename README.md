@@ -3,7 +3,7 @@
 [![CI](https://github.com/faustbrian/go-money/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-money/actions/workflows/ci.yml)
 [![CodeQL](https://img.shields.io/badge/CodeQL-required-blue)](https://github.com/faustbrian/go-money/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/coverage-100%25_required-blue)](CONTRIBUTING.md#verification)
-[![Mutation](https://img.shields.io/badge/mutation-100%25_required-blue)](CONTRIBUTING.md#verification)
+[![Mutation](https://img.shields.io/badge/mutation-local_or_scheduled-blue)](CONTRIBUTING.md#verification)
 [![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
 [![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money/v2.svg)](https://pkg.go.dev/github.com/faustbrian/go-money/v2)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-money?sort=semver)](https://github.com/faustbrian/go-money/releases)
@@ -111,10 +111,13 @@ retry state.
 
 ## Verification
 
-`make check` runs formatting, analysis, tests, meaningful 100% production
-coverage, race checks, docs, compatibility, dependency, float-contamination,
-vulnerability, fuzzing, mutation, and correctness-gated comparative benchmark
-gates through the released `go-library-tools` contract.
+Use ordinary Go tests and a focused two-second active fuzz command from
+[CONTRIBUTING.md](CONTRIBUTING.md#verification). `make check` and `make ci`
+retain the cheap no-float source check and bounded local assurance with public
+Tools v2.1.1. Required CI includes a checkout-only no-float job. Base-free checks
+run deterministic seeds/corpora, not active fuzz campaigns. `make check-full`
+retains the no-float policy and full exact/conservation, fuzz, race, coverage,
+mutation and correctness-gated benchmark assurance for selected risks.
 
 See [docs/api.md](docs/api.md),
 [docs/contexts-and-rounding.md](docs/contexts-and-rounding.md), and

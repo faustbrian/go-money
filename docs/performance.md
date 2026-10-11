@@ -22,6 +22,7 @@ its correctness preflight. Benchmark results are valid only when that
 preflight passes. Prefer minor-unit fixed operations for hot paths and retain
 rational results only until the required boundary.
 
-Run `golib check --module .` for the complete contract, or `make check` as the
-repository shorthand. The shared tool reports benchmark output and keeps its
+Run `golib check --module .` or `make check-full` for explicit full assurance.
+Ordinary `make check` and `make ci` use bounded local checks and do not run the
+benchmark campaign. The shared tool reports benchmark output and keeps its
 Go caches and temporary files task-owned.

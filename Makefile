@@ -1,17 +1,23 @@
 GOLIB ?= golib
 
-.PHONY: check ci cohesion inventory repository-check
+.PHONY: check check-full ci cohesion inventory no-float repository-check
 
-check:
+check: no-float
+	$(GOLIB) check --local --all
+
+check-full:
 	$(GOLIB) check --all
 
-ci:
+ci: no-float
 	$(GOLIB) repository check
 	$(GOLIB) cohesion check
-	$(GOLIB) check --all
+	$(GOLIB) check --local --all
 
 cohesion:
 	$(GOLIB) cohesion check
+
+no-float:
+	$(MAKE) -f verification/package.mk no-float
 
 inventory repository-check:
 	$(GOLIB) repository check
