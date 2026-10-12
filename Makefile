@@ -1,14 +1,14 @@
 GOLIB ?= golib
 
-.PHONY: check check-full ci cohesion inventory no-float repository-check
+.PHONY: check check-full ci cohesion inventory no-float repository-check source-docs-check
 
-check: no-float
+check: no-float source-docs-check
 	$(GOLIB) check --local --all
 
-check-full:
+check-full: source-docs-check
 	$(GOLIB) check --all
 
-ci: no-float
+ci: no-float source-docs-check
 	$(GOLIB) repository check
 	$(GOLIB) cohesion check
 	$(GOLIB) check --local --all
@@ -21,3 +21,6 @@ no-float:
 
 inventory repository-check:
 	$(GOLIB) repository check
+
+source-docs-check:
+	$(GOLIB) source-docs check --json

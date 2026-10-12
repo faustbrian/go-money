@@ -43,7 +43,7 @@ go test . -run '^$' -fuzz '^FuzzAllocationConservation$' -fuzztime=2s
 
 Select the native fuzz target and package affected by your change. Ordinary
 tests run deterministic seeds and saved corpora. For shared checks, install
-the public `golib` v2.1.1 release declared in `.golib.yaml` and verify its
+the public `golib` v2.4.0 release declared in `.golib.yaml` and verify its
 checksums:
 
 ```bash
@@ -51,8 +51,12 @@ make check
 make ci
 ```
 
-Both Make routes retain the cheap no-float source check and bounded local
-assurance. Ordinary CI runs the same script in a checkout-only, two-minute job
+The local `make source-docs-check` target checks all tracked Go documentation
+without compilation. `make check`, `make check-full` and `make ci` require it;
+shared CI runs the same strict check before its required result can succeed.
+
+Both ordinary Make routes retain the cheap no-float source check and bounded
+local assurance. Ordinary CI runs the same script in a checkout-only, two-minute job
 and requires both that job and shared CI to succeed. Base-free Make checks run
 deterministic seeds/corpora; changed parser inputs receive causal active smoke
 in CI. The sole root module declares no services or test tags; PostgreSQL
