@@ -10,7 +10,7 @@ import (
 
 // Money is an immutable exact decimal amount bound to one currency and one
 // precision context. Its zero value is absent and cannot participate in
-// arithmetic.
+// arithmetic. Values and their accessors are safe to share across goroutines.
 type Money struct {
 	amount   Amount
 	currency currency.Code
@@ -20,7 +20,10 @@ type Money struct {
 // Parse constructs Money from strict exact decimal text. It never converts
 // through binary floating point. Fixed contexts reject represented fractional
 // places beyond their scale, including trailing zeroes, rather than silently
-// normalizing a context difference.
+// normalizing a context difference. Shorter inputs are padded to the fixed
+// scale, which can exceed the digit budget and return a wrapped go-math limit
+// error. Currency/context validation precedes parsing. Cash contexts do not
+// round or require a multiple of their step. Failure returns invalid Money.
 func Parse(input string, code currency.Code, context Context) (Money, error) {
 	if err := validateCurrencyContext(code, context); err != nil {
 		return Money{}, err
@@ -73,7 +76,9 @@ func (money Money) String() string {
 	return money.amount.String() + " " + money.currency.String()
 }
 
-// Add returns the exact sum. Currency and resolved context must match.
+// Add returns the exact sum. Both values must be valid and their currency and
+// resolved context must match. An output exceeding the monetary budget returns
+// a wrapped go-math limit error; no partial sum is returned.
 func (money Money) Add(other Money) (Money, error) {
 	if err := money.compatible(other); err != nil {
 		return Money{}, err
@@ -90,7 +95,9 @@ func (money Money) Add(other Money) (Money, error) {
 	}, nil
 }
 
-// Sub returns the exact difference. Currency and resolved context must match.
+// Sub returns the exact difference. Both values must be valid and their currency
+// and resolved context must match. Output-limit errors are wrapped go-math errors;
+// no partial difference is returned.
 func (money Money) Sub(other Money) (Money, error) {
 	if err := money.compatible(other); err != nil {
 		return Money{}, err
@@ -128,7 +135,8 @@ func (money Money) Compare(other Money) (int, error) {
 }
 
 // Equal reports exact monetary equality after verifying currency and context
-// identity. Mismatched values return an error instead of comparing false.
+// identity. Invalid or mismatched values return an error. The boolean is meaningful
+// only when err is nil; callers must not use it as an error-independent result.
 func (money Money) Equal(other Money) (bool, error) {
 	comparison, err := money.Compare(other)
 	return comparison == 0, err

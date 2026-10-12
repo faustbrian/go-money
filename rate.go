@@ -8,23 +8,31 @@ import (
 	"github.com/faustbrian/go-math/rational"
 )
 
-// MaxRateMagnitude bounds generic multiplication and conversion rates.
+// MaxRateMagnitude is the inclusive default ceiling used by ParseRate.
+// ParseRateWithMaximum can select a different monetary-policy ceiling.
 const MaxRateMagnitude int64 = 1_000_000
 
-// Rate is an immutable, exact, nonnegative rational multiplier.
+// Rate is an immutable, exact, nonnegative rational multiplier. Its zero value
+// is invalid; a parsed zero is valid. Parsing bounds do not guarantee that a
+// later multiplication fits the monetary output budget.
 type Rate struct {
 	value rational.Rational
 	valid bool
 }
 
-// ParseRate parses either exact decimal text or a numerator/denominator pair.
+// ParseRate parses either exact decimal text or a numerator/denominator pair,
+// accepting values from zero through MaxRateMagnitude. Malformed, negative or
+// excessive input returns an error matching ErrInvalidRate.
 func ParseRate(input string) (Rate, error) {
 	return ParseRateWithMaximum(input, fmt.Sprint(MaxRateMagnitude))
 }
 
 // ParseRateWithMaximum parses a rate while applying an explicit inclusive
 // caller-defined maximum. The maximum accepts the same exact decimal or
-// numerator/denominator syntax as input and must be positive.
+// numerator/denominator syntax as input and must be positive. The generic
+// MaxRateMagnitude does not cap this override, but digit, scale and intermediate
+// budgets still apply. Invalid input or bounds return ErrInvalidRate; underlying
+// parse errors are diagnostic text, not additionally wrapped error identities.
 func ParseRateWithMaximum(input, maximum string) (Rate, error) {
 	value, err := parseRateValue(input)
 	if err != nil {
@@ -65,7 +73,8 @@ func parseRateValue(input string) (rational.Rational, error) {
 // Rational returns the immutable exact math value.
 func (rate Rate) Rational() rational.Rational { return rate.value }
 
-// String returns the normalized exact fraction.
+// String returns the normalized exact fraction. It does not indicate validity;
+// use Valid to distinguish the absent Rate from a parsed zero.
 func (rate Rate) String() string { return rate.value.String() }
 
 // IsZero reports whether the multiplier is zero.

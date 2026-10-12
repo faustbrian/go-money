@@ -8,6 +8,8 @@ import (
 	"github.com/faustbrian/go-math/integer"
 )
 
+// FuzzParseMoney checks hostile decimal text: every admitted EUR value must
+// survive canonical-text parsing without changing currency or resolved context.
 func FuzzParseMoney(f *testing.F) {
 	for _, seed := range []string{"0", "-0.00", "1.23", "9007199254740993.10", "1e3", "NaN"} {
 		f.Add(seed)
@@ -30,6 +32,8 @@ func FuzzParseMoney(f *testing.F) {
 	})
 }
 
+// FuzzAllocationConservation checks signed int64 minor-unit totals split into
+// 1..64 parts, requiring exact conservation including zero and negative totals.
 func FuzzAllocationConservation(f *testing.F) {
 	f.Add(int64(1000), uint8(3))
 	f.Add(int64(-1000), uint8(7))
@@ -50,6 +54,8 @@ func FuzzAllocationConservation(f *testing.F) {
 	})
 }
 
+// FuzzWeightedAllocationConservation checks signed totals with four positive
+// bounded integer weights; allocation must conserve the original Money.
 func FuzzWeightedAllocationConservation(f *testing.F) {
 	f.Add(int64(1000), uint16(1), uint16(2), uint16(5), uint16(8))
 	f.Add(int64(-1000), uint16(1), uint16(1), uint16(1), uint16(1))
@@ -75,6 +81,8 @@ func FuzzWeightedAllocationConservation(f *testing.F) {
 	})
 }
 
+// FuzzRate exercises decimal/fraction admission; accepted rates must be valid
+// and nonnegative, while malformed or excessive text may be rejected.
 func FuzzRate(f *testing.F) {
 	for _, seed := range []string{"0", "1", "1/3", "1.25", "-1", "1/0", "1000001"} {
 		f.Add(seed)

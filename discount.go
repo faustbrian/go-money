@@ -8,9 +8,11 @@ import (
 )
 
 // DiscountRate is an exact validated fraction in the inclusive range [0, 1].
+// Its zero value is invalid, unlike a parsed zero discount.
 type DiscountRate struct{ rate Rate }
 
-// ParseDiscountRate parses an exact discount fraction without floats.
+// ParseDiscountRate parses an exact decimal or fraction from zero through one
+// without floats. Malformed or out-of-range values return ErrInvalidRate.
 func ParseDiscountRate(input string) (DiscountRate, error) {
 	rate, err := ParseRate(input)
 	if err != nil {
@@ -48,7 +50,12 @@ func (result DiscountResult) Final() Money { return result.final }
 func (result DiscountResult) Rounding() RoundingResult { return result.rounding }
 
 // ApplyDiscount rounds the discount once and derives final by subtraction so
-// final + discount always equals original.
+// final + discount always equals original on success. It uses the original
+// context and requires valid Money, a parsed rate, non-nil ctx and a valid mode.
+// With an automatic context, a rounded scale differing from the original
+// resolved scale triggers an internal-invariant panic during subtraction. Use
+// a fixed context for this operation. Signed values retain their arithmetic
+// sign; business rules about negative prices or discounts remain caller policy.
 func ApplyDiscount(ctx context.Context, original Money, rate DiscountRate, mode gomath.RoundingMode) (DiscountResult, error) {
 	if !rate.rate.Valid() {
 		return DiscountResult{}, ErrInvalidRate

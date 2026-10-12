@@ -7,6 +7,8 @@ import (
 	"github.com/faustbrian/go-money/v2"
 )
 
+// FuzzVersionedJSON exercises hostile JSON bytes; every admitted value must
+// retain monetary identity through canonical version-1 encoding and decoding.
 func FuzzVersionedJSON(f *testing.F) {
 	f.Add([]byte(`{"version":1,"amount":"1.00","currency":"EUR","context":{"kind":"default","scale":2}}`))
 	f.Add([]byte(`null`))
@@ -31,6 +33,8 @@ func FuzzVersionedJSON(f *testing.F) {
 	})
 }
 
+// FuzzPostgreSQLNumeric exercises strict numeric text with explicit EUR context;
+// admitted values must persist as the exact decimal text, never a binary float.
 func FuzzPostgreSQLNumeric(f *testing.F) {
 	for _, seed := range []string{"0.00", "-1.25", "9007199254740993.10", "NaN", "1e3"} {
 		f.Add(seed)

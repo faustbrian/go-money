@@ -10,7 +10,10 @@ import (
 )
 
 // FromMinorUnits constructs Money from an arbitrary-precision integer count of
-// units at the supplied fixed context scale.
+// units at the supplied fixed context scale. Zero units are accepted. Automatic
+// or absent contexts return ErrInvalidContext. Currency/context validation occurs
+// before coefficient admission; oversized coefficients wrap go-math.ErrLimitExceeded.
+// Cash contexts retain scale-sized units without imposing their cash step.
 func FromMinorUnits(units integer.Integer, code currency.Code, context Context) (Money, error) {
 	if context.IsZero() || context.kind == ContextAutomatic {
 		return Money{}, ErrInvalidContext

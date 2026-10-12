@@ -7,14 +7,20 @@ import (
 	"github.com/faustbrian/go-math/decimal"
 )
 
-// MaxAmountDigits bounds coefficient input and diagnostic output.
+// MaxAmountDigits bounds admitted decimal digits and exact arithmetic output.
+// Sign and decimal-point characters are not digits; scale alignment must also
+// fit this budget.
 const MaxAmountDigits = 256
 
 // Amount is an immutable bounded monetary decimal. Exact decimal arithmetic is
-// delegated to math; Amount adds only monetary resource policy.
+// delegated to go-math; Amount adds only monetary resource policy. Its zero
+// value is numeric zero at scale zero. Values are safe to share across goroutines.
 type Amount struct{ value decimal.Decimal }
 
-// ParseAmount parses strict decimal text without a float conversion.
+// ParseAmount parses strict decimal text without a float conversion, preserving
+// represented scale and trailing zeroes. Exponents and non-finite values are
+// rejected. Digit-limit and syntax errors wrap go-math errors; unsupported
+// scales return ErrAmountLimit. Failure returns the zero Amount.
 func ParseAmount(input string) (Amount, error) {
 	value, err := decimal.ParseWithOptions(input, decimal.ParseOptions{Limits: arithmeticLimits()})
 	if err != nil {
@@ -24,7 +30,10 @@ func ParseAmount(input string) (Amount, error) {
 	return AmountFromDecimal(value)
 }
 
-// AmountFromDecimal applies monetary bounds to an exact math Decimal.
+// AmountFromDecimal applies monetary bounds to an exact go-math Decimal before
+// formatting its coefficient. It preserves the admitted representation without
+// rounding or normalization and returns ErrAmountLimit for unsupported scale or
+// magnitude. The caller still owns the cost of constructing value.
 func AmountFromDecimal(value decimal.Decimal) (Amount, error) {
 	if value.Scale() < 0 || value.Scale() > int32(MaxScale) {
 		return Amount{}, ErrAmountLimit
@@ -52,7 +61,7 @@ func (amount Amount) Sign() int { return amount.value.Sign() }
 // IsZero reports numeric zero.
 func (amount Amount) IsZero() bool { return amount.value.IsZero() }
 
-// Equal reports numeric equality.
+// Equal reports numeric equality, ignoring represented scale and trailing zeroes.
 func (amount Amount) Equal(other Amount) bool { return amount.value.Equal(other.value) }
 
 func (amount Amount) add(other Amount) (Amount, error) {

@@ -1,5 +1,12 @@
 // Package encoding provides bounded, versioned money wire and persistence
 // adapters. Amounts are always exact decimal strings, never JSON numbers.
+// Start with MarshalJSON/UnmarshalJSON for whole values or SQLMoney for
+// database/sql. NumericValue/ScanNumeric require separate currency/context data.
+//
+// The adapters perform no database I/O, migrations, authentication or transaction
+// management, and require neither a database driver nor cgo. Stateless functions
+// can be called concurrently; a mutable SQLMoney receiver needs caller-owned
+// synchronization. Version 1 is a package-owned schema, not a payment protocol.
 package encoding
 
 import (
@@ -21,6 +28,8 @@ const (
 	MaxEncodedBytes = 2_048
 )
 
+// ErrInvalidEncoding classifies malformed, unsupported or excessive wire/SQL
+// representations. Decode errors match it with errors.Is without exposing input.
 var ErrInvalidEncoding = errors.New("money encoding: invalid representation")
 
 type wireContext struct {
@@ -36,7 +45,9 @@ type wireMoney struct {
 	Context  wireContext `json:"context"`
 }
 
-// MarshalJSON returns deterministic versioned JSON with a string amount.
+// MarshalJSON returns deterministic versioned JSON with a string amount,
+// retaining currency, context kind, resolved scale and cash step. Invalid Money
+// returns money.ErrInvalidMoney and nil output. Returned bytes are caller-owned.
 func MarshalJSON(value money.Money) ([]byte, error) {
 	if !value.Valid() {
 		return nil, money.ErrInvalidMoney
@@ -55,11 +66,18 @@ func MarshalJSON(value money.Money) ([]byte, error) {
 	})
 }
 
-// UnmarshalJSON validates bounded versioned JSON and reconstructs Money.
+// UnmarshalJSON validates version-1 JSON and reconstructs Money without rounding.
+// Empty/nil or excessive input, duplicate keys at any depth, unknown fields,
+// trailing data and inconsistent metadata return ErrInvalidEncoding or an error
+// wrapping it. Historic currency codes are accepted. Input is not retained;
+// decoding failure returns invalid Money. This validates representation, not
+// authenticity or business authorization.
 func UnmarshalJSON(data []byte) (money.Money, error) {
 	if len(data) == 0 || len(data) > MaxEncodedBytes {
 		return money.Money{}, ErrInvalidEncoding
 	}
+	// encoding/json normally accepts later duplicate keys. Preflight the whole
+	// bounded document so nested duplicates cannot override persisted identity.
 	if err := rejectDuplicateKeys(data); err != nil {
 		return money.Money{}, err
 	}
@@ -103,6 +121,10 @@ func rejectDuplicateKeys(data []byte) error {
 	return nil
 }
 
+// The production decoder calls scanJSONValue after checking the byte ceiling.
+// That ceiling
+// bounds recursive nesting and token work; this is not a streaming/unbounded
+// JSON traversal API.
 func scanJSONValue(decoder *json.Decoder) error {
 	token, err := decoder.Token()
 	if err != nil {
@@ -169,10 +191,16 @@ func MarshalText(value money.Money) ([]byte, error) { return MarshalJSON(value) 
 // UnmarshalText validates the canonical versioned representation.
 func UnmarshalText(data []byte) (money.Money, error) { return UnmarshalJSON(data) }
 
-// SQLMoney adapts versioned Money to database/sql Scanner and Valuer.
-type SQLMoney struct{ Money money.Money }
+// SQLMoney adapts versioned Money to database/sql Scanner and Valuer. The zero
+// value can receive Scan but cannot produce Value until populated. A receiver
+// is mutable and must not be scanned or read concurrently without synchronization.
+type SQLMoney struct {
+	// Money is the current value, replaced only after Scan successfully decodes.
+	Money money.Money
+}
 
 // Value returns canonical versioned text suitable for text or JSON columns.
+// Invalid Money returns nil and money.ErrInvalidMoney; SQL NULL is not emitted.
 func (value SQLMoney) Value() (driver.Value, error) {
 	data, err := MarshalText(value.Money)
 	if err != nil {
@@ -183,7 +211,9 @@ func (value SQLMoney) Value() (driver.Value, error) {
 }
 
 // Scan accepts only string or byte database values and replaces Money after a
-// complete successful decode.
+// complete successful decode. Nil receivers, SQL NULL, unsupported source types
+// and out-of-budget inputs return ErrInvalidEncoding. Byte inputs are copied
+// after admission; no input buffer is retained. Every failure preserves Money.
 func (value *SQLMoney) Scan(source any) error {
 	if value == nil {
 		return ErrInvalidEncoding
@@ -223,7 +253,10 @@ func NumericValue(value money.Money) (driver.Value, error) {
 }
 
 // ScanNumeric reconstructs Money from PostgreSQL numeric text plus explicit
-// currency and context columns.
+// currency and context columns. Only string and []byte are accepted; SQL NULL,
+// binary floats and inputs over money.MaxAmountDigits+2 bytes return
+// ErrInvalidEncoding before conversion. Admitted text passes directly to
+// money.Parse, preserving its errors and precision policy. No input is retained.
 func ScanNumeric(source any, code currency.Code, context money.Context) (money.Money, error) {
 	var text string
 	switch source := source.(type) {

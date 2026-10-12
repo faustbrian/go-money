@@ -11,7 +11,8 @@ import (
 )
 
 // RationalMoney is an immutable exact fractional monetary result. It must be
-// rounded explicitly before persistence as fixed-context Money.
+// rounded explicitly before persistence as Money. Its zero value is absent;
+// String returns empty text and Round returns ErrInvalidMoney.
 type RationalMoney struct {
 	amount   rational.Rational
 	currency currency.Code
@@ -19,7 +20,8 @@ type RationalMoney struct {
 }
 
 // Ratio is an immutable exact signed relationship between compatible monetary
-// values.
+// values. The zero value is absent: String returns empty text, while Rational
+// returns numeric zero without conveying validity.
 type Ratio struct {
 	value rational.Rational
 	valid bool
@@ -63,7 +65,12 @@ func (money RationalMoney) Rational() rational.Rational { return money.amount }
 // Currency returns the monetary identity.
 func (money RationalMoney) Currency() currency.Code { return money.currency }
 
-// Round creates fixed-context Money at an explicit rounding boundary.
+// Round creates Money at an explicit rounding boundary. Default targets must
+// belong to the same currency; custom targets use their scale and cash targets
+// round to their step. Automatic targets require a terminating exact decimal
+// within MaxScale places or return ErrPrecisionLoss. Absent money/target or an
+// invalid rounding mode returns ErrInvalidMoney. Failure returns invalid Money
+// and an empty RoundingResult; no partial rounded value is returned.
 func (money RationalMoney) Round(target Context, mode gomath.RoundingMode) (Money, RoundingResult, error) {
 	if money.currency.IsZero() || target.IsZero() || !mode.Valid() {
 		return Money{}, RoundingResult{}, ErrInvalidMoney
@@ -91,6 +98,8 @@ func (money RationalMoney) Round(target Context, mode gomath.RoundingMode) (Mone
 }
 
 func terminatingScale(value rational.Rational) (uint8, error) {
+	// A reduced fraction terminates in base ten iff its denominator contains
+	// only factors 2 and 5. The larger exponent is the required decimal scale.
 	denominator := value.Denominator()
 	denominator, twos := removeFactor(denominator, 2)
 	denominator, fives := removeFactor(denominator, 5)
@@ -104,6 +113,8 @@ func removeFactor(denominator *big.Int, factor int64) (*big.Int, uint8) {
 	remainder := new(big.Int)
 	divisor := big.NewInt(factor)
 	count := uint8(0)
+	// One factor beyond the admitted scale is enough to reject the expansion;
+	// do not scan arbitrarily large powers supplied through rational arithmetic.
 	for range MaxScale + 1 {
 		quotient, _ := new(big.Int).QuoRem(denominator, divisor, remainder)
 		if remainder.Sign() != 0 {
@@ -121,6 +132,8 @@ func roundedDecimal(amount rational.Rational, target Context, mode gomath.Roundi
 		return amount.Decimal(int(target.scale), mode, arithmeticLimits())
 	}
 
+	// Round an integer count of cash increments once, then restore decimal
+	// units. Decimal-place rounding alone would not enforce the cash step.
 	denominator := new(big.Int).Exp(big.NewInt(10), big.NewInt(int64(target.scale)), nil)
 	step := mustInvariant(rational.NewChecked(
 		new(big.Int).SetUint64(target.cashStep), denominator, arithmeticLimits(),
@@ -142,7 +155,8 @@ func roundedDecimal(amount rational.Rational, target Context, mode gomath.Roundi
 }
 
 // Mul returns an exact rational result without applying the Money context's
-// fixed scale.
+// fixed scale. The rate must be valid (zero is accepted); nil ctx and bounded
+// arithmetic failures return errors. The input Money remains unchanged.
 func (money Money) Mul(ctx context.Context, rate Rate) (RationalMoney, error) {
 	if !money.Valid() {
 		return RationalMoney{}, ErrInvalidMoney
@@ -162,7 +176,9 @@ func (money Money) Mul(ctx context.Context, rate Rate) (RationalMoney, error) {
 	return RationalMoney{amount: product, currency: money.currency, source: money.context}, nil
 }
 
-// Quo divides by an exact nonzero rate without rounding.
+// Quo divides by an exact nonzero rate without rounding. An invalid or zero
+// rate returns ErrInvalidRate; nil ctx and bounded arithmetic failures return
+// errors. The input Money remains unchanged.
 func (money Money) Quo(ctx context.Context, rate Rate) (RationalMoney, error) {
 	if !money.Valid() {
 		return RationalMoney{}, ErrInvalidMoney
@@ -182,7 +198,9 @@ func (money Money) Quo(ctx context.Context, rate Rate) (RationalMoney, error) {
 	return RationalMoney{amount: quotient, currency: money.currency, source: money.context}, nil
 }
 
-// Ratio returns money/other exactly after verifying currency and context.
+// Ratio returns money/other exactly after verifying currency and resolved
+// context. Division by numeric zero wraps go-math.ErrDivisionByZero. Nil ctx
+// and bounded arithmetic failures return errors; no partial ratio is returned.
 func (money Money) Ratio(ctx context.Context, other Money) (Ratio, error) {
 	if err := money.compatible(other); err != nil {
 		return Ratio{}, err

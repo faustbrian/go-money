@@ -12,9 +12,12 @@ import (
 const MaxTaxRate int64 = 10
 
 // TaxRate is an exact validated nonnegative tax fraction: 0.24 means 24%.
+// Its zero value is invalid; a parsed zero rate is valid.
 type TaxRate struct{ rate Rate }
 
-// ParseTaxRate parses an exact tax fraction without binary floating point.
+// ParseTaxRate parses an exact decimal or fraction from zero through MaxTaxRate
+// without binary floating point. Invalid input returns ErrInvalidRate; the
+// caller is responsible for selecting a jurisdictionally applicable rate.
 func ParseTaxRate(input string) (TaxRate, error) {
 	rate, err := ParseRate(input)
 	if err != nil {
@@ -42,7 +45,8 @@ type TaxResult struct {
 // Net returns the amount excluding tax.
 func (result TaxResult) Net() Money { return result.net }
 
-// Tax returns the rounded tax component.
+// Tax returns the conserved tax component. AddTax rounds this component;
+// ExtractTax derives it as gross minus rounded net, without separately rounding tax.
 func (result TaxResult) Tax() Money { return result.tax }
 
 // Gross returns the amount including tax.
@@ -52,7 +56,10 @@ func (result TaxResult) Gross() Money { return result.gross }
 func (result TaxResult) Rounding() RoundingResult { return result.rounding }
 
 // AddTax calculates tax from a net amount, rounds the tax once, then derives
-// gross by addition so net + tax always equals gross.
+// gross by addition so net + tax always equals gross on success. It uses the
+// net context and requires valid Money, a parsed rate, non-nil ctx and a valid
+// mode. Automatic contexts can fail if the rounded component scale differs
+// from net. Signed amounts follow arithmetic, not jurisdictional tax policy.
 func AddTax(ctx context.Context, net Money, rate TaxRate, mode gomath.RoundingMode) (TaxResult, error) {
 	if !rate.rate.Valid() {
 		return TaxResult{}, ErrInvalidRate
@@ -74,7 +81,11 @@ func AddTax(ctx context.Context, net Money, rate TaxRate, mode gomath.RoundingMo
 }
 
 // ExtractTax derives exact net from gross/(1+rate), rounds net once, then
-// subtracts it from gross so the returned components conserve gross.
+// subtracts it from gross so the returned components conserve gross on success.
+// Rounding describes the net boundary, not an independently rounded tax. It
+// requires valid Money, a parsed rate, non-nil ctx and a valid mode. Automatic
+// contexts whose resolved net scale differs from gross trigger an
+// internal-invariant panic during subtraction; use a fixed context.
 func ExtractTax(ctx context.Context, gross Money, rate TaxRate, mode gomath.RoundingMode) (TaxResult, error) {
 	if !gross.Valid() {
 		return TaxResult{}, ErrInvalidMoney

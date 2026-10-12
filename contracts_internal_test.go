@@ -494,6 +494,9 @@ func mustLargeInteger(t *testing.T, digits int) integer.Integer {
 	return value
 }
 
+// stagedCancellation fails a chosen Err probe to exercise cancellation at
+// successive arithmetic stages without relying on scheduler timing. It is a
+// single-call test double, not a concurrently usable cancellation context.
 type stagedCancellation struct {
 	calls  int
 	failAt int

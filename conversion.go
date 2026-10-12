@@ -25,7 +25,11 @@ type ExchangeRate struct {
 	source     string
 }
 
-// NewExchangeRate validates a directed rate and its observation metadata.
+// NewExchangeRate validates a directed rate and its observation metadata. Base
+// and quote must be nonzero and distinct, and rate must be valid and positive.
+// observedAt must be nonzero; source must be nonempty valid UTF-8, no longer
+// than MaxRateSourceBytes, without control characters or surrounding whitespace.
+// Attribution is descriptive, not authenticated, and freshness is caller policy.
 func NewExchangeRate(base, quote currency.Code, rate Rate, observedAt time.Time, source string) (ExchangeRate, error) {
 	if base.IsZero() || quote.IsZero() {
 		return ExchangeRate{}, ErrUnknownCurrency
@@ -85,7 +89,11 @@ func (result ConversionResult) Rate() ExchangeRate { return result.rate }
 func (result ConversionResult) Rounding() RoundingResult { return result.rounding }
 
 // Convert applies only the supplied directed exact rate and rounds explicitly
-// into target. It never contacts a live FX service.
+// into target. Source currency must equal rate.Base, and target must be a
+// non-automatic context compatible with rate.Quote. Use a rate returned by
+// NewExchangeRate; its zero value is not a usable conversion rate. Nil ctx and
+// bounded arithmetic failures return errors. It never contacts a live FX
+// service or checks observation freshness. No partial conversion is returned.
 func Convert(ctx context.Context, source Money, rate ExchangeRate, target Context, mode gomath.RoundingMode) (ConversionResult, error) {
 	if !source.Valid() {
 		return ConversionResult{}, ErrInvalidMoney

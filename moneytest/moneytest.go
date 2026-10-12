@@ -1,5 +1,9 @@
 // Package moneytest provides currency fixtures and conservation assertions for
-// consumers of money.
+// consumers of money. Start with CurrencyFixtures and MustParse, then use
+// assertions for exact identity or component conservation. These helpers do not
+// implement business policy or an independent arithmetic oracle. They perform
+// no I/O and introduce no cgo or external-service requirement; test execution
+// lifetime and concurrency follow the caller-provided TestingT.
 package moneytest
 
 import (
@@ -7,21 +11,27 @@ import (
 	"github.com/faustbrian/go-money/v2"
 )
 
-// TestingT is the subset of testing.TB used by assertions.
+// TestingT is the subset of testing.TB used by assertions. Implementations must
+// be non-nil and Fatalf must stop the current test invocation rather than return.
 type TestingT interface {
+	// Helper marks the calling assertion as a helper for failure attribution.
 	Helper()
+	// Fatalf reports a formatted failure and must not return to the assertion.
 	Fatalf(format string, arguments ...any)
 }
 
 // CurrencyFixture represents an authoritative currency edge and an explicit
 // usable monetary context.
 type CurrencyFixture struct {
-	Code    currency.Code
+	// Code is the parsed current or explicitly admitted historic identity.
+	Code currency.Code
+	// Context is usable for Code; historic FIM deliberately uses custom scale 2.
 	Context money.Context
 }
 
 // CurrencyFixtures returns independent fixtures for ordinary, zero-unit,
-// three-unit, and historic currencies.
+// three-unit, and historic currencies (EUR, JPY, BHD and FIM). Each call returns
+// a new slice of immutable currency/context values.
 func CurrencyFixtures() []CurrencyFixture {
 	euro, _ := currency.Parse("EUR")
 	yen, _ := currency.Parse("JPY")

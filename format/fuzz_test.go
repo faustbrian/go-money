@@ -10,6 +10,9 @@ import (
 	moneyformat "github.com/faustbrian/go-money/v2/format"
 )
 
+// FuzzLocale exercises bounded amount/locale text and display options. Successful
+// formatting must preserve the original Money and output budget; code-label
+// mode must retain EUR identity. Invalid locale/amount inputs may be rejected.
 func FuzzLocale(f *testing.F) {
 	f.Add("1234567.89", "fi-FI", true)
 	f.Add("-0.01", "ar-EG", false)

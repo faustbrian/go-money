@@ -15,11 +15,13 @@ const MaxAllocationParts = 10_000
 // MaxRatioDigits bounds each positive integer allocation weight.
 const MaxRatioDigits = 64
 
-// AllocationResult is an immutable ordered allocation. Earlier parts receive
-// deterministic one-unit remainders.
+// AllocationResult is an immutable ordered allocation conserving its source
+// amount. EqualSplit assigns remainders by position; Allocate uses largest
+// remainders with stable ties. The zero value has no parts and Sum fails.
 type AllocationResult struct{ parts []Money }
 
-// Parts returns an independent copy of the ordered allocation.
+// Parts returns an independent copy of the ordered allocation, or nil for the
+// zero result. Mutating the returned slice cannot alter the result.
 func (result AllocationResult) Parts() []Money {
 	return append([]Money(nil), result.parts...)
 }
@@ -42,7 +44,11 @@ func (result AllocationResult) Sum() (Money, error) {
 }
 
 // EqualSplit divides money into count fixed-context parts and distributes any
-// positive or negative minor-unit remainder from the first part onward.
+// positive or negative minor-unit remainder from the first part onward. Count
+// must be in [1, MaxAllocationParts] and ctx must be non-nil, otherwise
+// ErrInvalidAllocation is returned. Automatic contexts return ErrInvalidContext.
+// Cash values split in scale-sized minor units, not cash-step multiples.
+// Cancellation and arithmetic-limit failures return no partial allocation.
 func (money Money) EqualSplit(ctx context.Context, count int) (AllocationResult, error) {
 	if !money.Valid() {
 		return AllocationResult{}, ErrInvalidMoney
@@ -86,7 +92,13 @@ func (money Money) EqualSplit(ctx context.Context, count int) (AllocationResult,
 }
 
 // Allocate apportions money by positive integer ratios using stable largest
-// remainders. Equal remainders are resolved by original ratio order.
+// remainders. Equal remainders are resolved by original ratio order. There must
+// be 1..MaxAllocationParts ratios, each positive with at most MaxRatioDigits
+// digits; nil ctx or invalid ratios return ErrInvalidAllocation. Automatic
+// contexts return ErrInvalidContext. Ratios are read without retaining the
+// slice; callers must not modify it during the call. Cash values use minor
+// units rather than cash-step multiples. Cancellation and arithmetic-limit
+// failures return no partial allocation.
 func (money Money) Allocate(ctx context.Context, ratios []integer.Integer) (AllocationResult, error) {
 	if !money.Valid() {
 		return AllocationResult{}, ErrInvalidMoney
@@ -103,6 +115,8 @@ func (money Money) Allocate(ctx context.Context, ratios []integer.Integer) (Allo
 		if ratio.Sign() <= 0 {
 			return AllocationResult{}, ErrInvalidAllocation
 		}
+		// Admit the typed magnitude before String can allocate proportional to a
+		// caller-created coefficient; retain cancellation rather than masking it.
 		if _, err := ratio.Add(ctx, integer.Zero(), arithmeticLimits()); err != nil {
 			if cancellationErr := ctx.Err(); cancellationErr != nil {
 				return AllocationResult{}, cancellationErr
@@ -123,6 +137,8 @@ func (money Money) Allocate(ctx context.Context, ratios []integer.Integer) (Allo
 	if err != nil {
 		return AllocationResult{}, err
 	}
+	// Largest remainders are ranked on magnitudes, then the original sign is
+	// restored. Ranking signed remainders would bias negative allocations.
 	absTotal := total.Abs()
 	units := make([]integer.Integer, len(ratios))
 	remainders := make([]integer.Integer, len(ratios))

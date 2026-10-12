@@ -1,6 +1,11 @@
 // Package format renders exact Money values for display. Currency identity
 // remains the international Code carried by Money; formatting never changes
-// arithmetic values or contexts.
+// arithmetic values or contexts. Start with Exact for diagnostic decimal text
+// or Locale for display with CLDR data from the pinned x/text dependency.
+//
+// Display is not a persistence representation or a locale-input parser. Calls
+// have no shared mutable formatter state and can run concurrently. No external
+// service, cgo or background lifecycle is introduced.
 package format
 
 import (
@@ -19,6 +24,8 @@ import (
 // MaxFormattedBytes bounds display output and diagnostic amplification.
 const MaxFormattedBytes = 2_048
 
+// ErrInvalidFormat reports absent Money/locale identity or display output
+// exceeding MaxFormattedBytes. Formatting failures return empty text.
 var ErrInvalidFormat = errors.New("money format: invalid value or locale")
 
 // Options controls display-only currency labeling.
@@ -29,6 +36,7 @@ type Options struct {
 }
 
 // Exact returns context-preserving decimal text and the ISO currency code.
+// Invalid Money returns empty text; no locale grouping or rounding is applied.
 func Exact(value money.Money) string {
 	if !value.Valid() {
 		return ""
@@ -39,7 +47,10 @@ func Exact(value money.Money) string {
 
 // Locale formats exact decimal text with CLDR digits and separators selected
 // by a validated international locale. It never converts the amount to a
-// float or asks x/text to round it.
+// float or asks x/text to round it. Output always places the label before the
+// number, separated by a space; it is not a complete locale currency layout.
+// Symbol falls back to the ISO code when x/text lacks the currency. Invalid
+// identities or oversized output return empty text and ErrInvalidFormat.
 func Locale(value money.Money, tag locale.Tag, options Options) (string, error) {
 	if !value.Valid() || tag.IsZero() {
 		return "", ErrInvalidFormat
@@ -86,6 +97,8 @@ func localizedDigits(printer *message.Printer) [10]string {
 	return digits
 }
 
+// Infer CLDR punctuation from small fixed samples, never from the Money amount:
+// routing the amount through a numeric formatter would introduce rounding.
 func inferDecimalSeparator(printer *message.Printer, digits [10]string) string {
 	sample := delocalizeDigits(printer.Sprintf("%v", number.Decimal(1, number.Scale(1))), digits)
 	return decimalSeparator(sample)
@@ -106,6 +119,9 @@ func inferGrouping(printer *message.Printer, digits [10]string) (string, int, in
 	return groupingPattern(sample, expanded)
 }
 
+// groupingPattern recovers primary and repeated secondary groups separately:
+// hi-IN uses a three-digit tail and two-digit groups before it. Fallbacks are
+// protected by TestFormattingFallbacksAndOutputBound, not conformance claims.
 func groupingPattern(sample, expanded string) (string, int, int) {
 	separator := strings.TrimSuffix(strings.TrimPrefix(sample, "1"), "000")
 	if separator == "" {

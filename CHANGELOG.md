@@ -5,6 +5,12 @@ semantic versioning after the first tagged release.
 
 ## Unreleased
 
+### Documentation
+
+- Clarify cash construction versus explicit rounding, automatic-context
+  restrictions, weighted remainder ordering, conserved tax components and
+  bounded persistence/ownership contracts without changing runtime behavior.
+
 ## 2.0.2 - 2026-10-07
 
 ### Changed

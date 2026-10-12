@@ -25,6 +25,7 @@ var (
 	ErrInvalidRate = errors.New("money: invalid rate")
 	// ErrInvalidAllocation reports an empty, excessive, or nonpositive split.
 	ErrInvalidAllocation = errors.New("money: invalid allocation")
-	// ErrMoneyBagLimit reports excessive distinct currency/context entries.
+	// ErrMoneyBagLimit reports excessive constructor input count or distinct
+	// currency/context entries.
 	ErrMoneyBagLimit = errors.New("money: bag limit exceeded")
 )

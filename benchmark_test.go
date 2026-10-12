@@ -13,6 +13,9 @@ import (
 	govalues "github.com/govalues/money"
 )
 
+// BenchmarkExactAdd measures EUR 123.45 + 67.89 with immutable exact arithmetic.
+// Parsing and the 191.34 correctness preflight are excluded from timing; peer
+// benchmarks use the same values, not the same numeric representation.
 func BenchmarkExactAdd(b *testing.B) {
 	euro, _ := currency.Parse("EUR")
 	monetaryContext, _ := DefaultContext(euro)
@@ -27,6 +30,8 @@ func BenchmarkExactAdd(b *testing.B) {
 	}
 }
 
+// BenchmarkGovaluesAdd measures the same EUR sum as BenchmarkExactAdd using
+// govalues fixed-decimal amounts, excluding parsing and correctness preflight.
 func BenchmarkGovaluesAdd(b *testing.B) {
 	left, _ := govalues.ParseAmount("EUR", "123.45")
 	right, _ := govalues.ParseAmount("EUR", "67.89")
@@ -42,6 +47,8 @@ func BenchmarkGovaluesAdd(b *testing.B) {
 	}
 }
 
+// BenchmarkRhymondAdd measures the same EUR sum as BenchmarkExactAdd using
+// Rhymond int64 minor units, excluding construction and correctness preflight.
 func BenchmarkRhymondAdd(b *testing.B) {
 	left := rhymond.New(12_345, rhymond.EUR)
 	right := rhymond.New(6_789, rhymond.EUR)
@@ -57,6 +64,9 @@ func BenchmarkRhymondAdd(b *testing.B) {
 	}
 }
 
+// BenchmarkRejectOversizedTypedInputs measures rejection at three numeric input
+// boundaries for an already-created 10,001-bit coefficient. Input construction
+// is excluded; each iteration includes all three rejections, not one operation.
 func BenchmarkRejectOversizedTypedInputs(b *testing.B) {
 	limits := gomath.DefaultLimits()
 	limits.MaxInputDigits = 10_000

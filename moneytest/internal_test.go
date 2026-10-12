@@ -44,6 +44,8 @@ func assertFails(t *testing.T, assertion func(TestingT)) {
 	}
 }
 
+// panicTestingT models the non-returning Fatalf contract while allowing the
+// enclosing test to verify failure reporting without terminating itself.
 type panicTestingT struct{}
 
 func (panicTestingT) Helper() {}

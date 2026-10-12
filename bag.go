@@ -15,7 +15,10 @@ const MaxMoneyBagEntries = 1_000
 // and context identity. Its zero value is an empty bag.
 type MoneyBag struct{ values []Money }
 
-// NewMoneyBag validates and combines values with identical identities.
+// NewMoneyBag validates and combines values with identical identities. The
+// input count must not exceed MaxMoneyBagEntries even when all inputs combine;
+// excess returns ErrMoneyBagLimit. Empty input produces an empty bag. Inputs
+// are not retained, and invalid values or sum-limit failures return no partial bag.
 func NewMoneyBag(values ...Money) (MoneyBag, error) {
 	if len(values) > MaxMoneyBagEntries {
 		return MoneyBag{}, ErrMoneyBagLimit
@@ -62,10 +65,12 @@ func (bag MoneyBag) Add(value Money) (MoneyBag, error) {
 	return MoneyBag{values: values}, nil
 }
 
-// Values returns an independent deterministic slice.
+// Values returns an independent slice ordered by currency code, then context
+// kind, scale, cash step and currency binding. An empty bag returns nil.
 func (bag MoneyBag) Values() []Money { return append([]Money(nil), bag.values...) }
 
-// Get returns the value with exact currency and context identity.
+// Get returns the value with exact currency and context identity. An absent
+// entry returns invalid Money and false; no conversion or context inference occurs.
 func (bag MoneyBag) Get(code currency.Code, context Context) (Money, bool) {
 	for _, value := range bag.values {
 		if value.currency == code && value.context == context {
