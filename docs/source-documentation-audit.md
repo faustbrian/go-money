@@ -1,5 +1,8 @@
 # Source documentation audit
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 ## Scope and plan
 
 Baseline: `14c26b349c6d27886b5da2717d38ae7efd1d3f3d` (main).

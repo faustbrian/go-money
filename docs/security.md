@@ -1,5 +1,8 @@
 # Security model
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: Allocations](allocations.md)
+
 Model version: 2.0; release boundary: v2.0.0, published 2026-10-03.
 
 The released v1 line remains supported. This model describes the stricter

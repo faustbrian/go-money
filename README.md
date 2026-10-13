@@ -1,10 +1,7 @@
 # money
 
 [![CI](https://github.com/faustbrian/go-money/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-money/actions/workflows/ci.yml)
-[![CodeQL](https://img.shields.io/badge/CodeQL-required-blue)](https://github.com/faustbrian/go-money/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/coverage-100%25_required-blue)](CONTRIBUTING.md#verification)
-[![Mutation](https://img.shields.io/badge/mutation-local_or_scheduled-blue)](CONTRIBUTING.md#verification)
-[![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
+[![Documentation](https://img.shields.io/badge/docs-adoption_and_API-blue)](docs/index.md)
 [![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money/v2.svg)](https://pkg.go.dev/github.com/faustbrian/go-money/v2)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-money?sort=semver)](https://github.com/faustbrian/go-money/releases)
 [![Go](https://img.shields.io/badge/go-1.27.0-00ADD8?logo=go)](https://go.dev/)
@@ -18,6 +15,16 @@ The package never accepts or emits `float32` or `float64`. Fixed `Money`
 operations preserve currency and resolved context identity. Multiplication and
 division return `RationalMoney`; callers choose the context and rounding mode at
 the boundary where a fixed amount is required.
+
+## Adoption entry points
+
+The root module is `github.com/faustbrian/go-money/v2` (stable).
+It requires Go 1.27.0. Pin the published `v2.0.2` root tag
+with `go get github.com/faustbrian/go-money/v2@v2.0.2`.
+Root subpackages share this module; they need no separate installation.
+
+Start with the [documentation map](docs/index.md) for package selection,
+examples, operational constraints, and contributor references.
 
 ## Status, lifecycle, and platform
 
@@ -132,5 +139,5 @@ references. See the [FAQ and troubleshooting guide](docs/faq.md),
 reporting routes.
 
 For ecosystem-wide selection and ownership guidance, see the versioned
-[Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md)
-and its [Domain utilities family](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/design-language.md#package-families-and-selection).
+[Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md)
+and its [Domain utilities family](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/design-language.md#package-families-and-selection).

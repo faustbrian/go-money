@@ -1,5 +1,8 @@
 # Tax and discounts
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 Tax rates are exact nonnegative fractions bounded at 1000%. Discount rates are
 exact fractions in the inclusive range from 0% through 100%.
 

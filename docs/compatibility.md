@@ -1,5 +1,8 @@
 # Compatibility
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 Published v2.0.0 requires Go 1.27.0; published v1.0.0 targets Go 1.26.6.
 The released v1 public API remains
 captured byte-for-byte in `api/v1.txt`. Published v2 uses the semantic

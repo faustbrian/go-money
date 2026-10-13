@@ -1,5 +1,8 @@
 # Verification
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 Ordinary `make check` and `make ci` execute the bounded local contract through
 the public `golib` release declared in `.golib.yaml`: deterministic unit,
 matrix, property, official-currency, SQL and JSON tests, maintained-peer

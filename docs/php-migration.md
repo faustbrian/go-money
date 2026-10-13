@@ -1,5 +1,8 @@
 # Migration from PHP money libraries
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 For `moneyphp/money`, migrate the integer amount string with `FromMinorUnits`
 and map the ISO code through `international/currency`. Preserve the PHP
 currency exponent in an explicit context and verify it against current or

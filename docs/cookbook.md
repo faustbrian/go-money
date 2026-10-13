@@ -1,5 +1,8 @@
 # Cookbook
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 ## Historic currency
 
 Parse the code with `AllowHistoric: true`, select an explicit context when the

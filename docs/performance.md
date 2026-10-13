@@ -1,5 +1,8 @@
 # Performance
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 Correctness and bounds take precedence over allocation count. Exact
 arbitrary-precision arithmetic is expected to cost more than fixed `int64`
 money implementations.

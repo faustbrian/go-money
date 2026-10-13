@@ -1,5 +1,8 @@
 # Formatting
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 Core `Money.String` is a deterministic diagnostic representation such as
 `12.30 EUR`. It is not locale display.
 

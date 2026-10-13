@@ -1,5 +1,8 @@
 # FAQ
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 ## Why no float constructor?
 
 Binary floats cannot represent many decimal fractions exactly. Callers must

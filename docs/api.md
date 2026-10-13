@@ -1,5 +1,8 @@
 # API reference
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: Security model](security.md)
+
 ## Construction
 
 `Parse` accepts strict exact decimal text, a validated currency code, and an

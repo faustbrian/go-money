@@ -1,5 +1,8 @@
 # Allocations
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 `EqualSplit` divides exact minor units by a positive bounded part count. Any
 signed remainder is assigned one unit at a time from the first part onward.
 

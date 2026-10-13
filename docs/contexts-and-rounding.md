@@ -1,5 +1,8 @@
 # Contexts and rounding
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 Contexts are immutable arithmetic policies. They do not own or edit ISO
 metadata.
 

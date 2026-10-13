@@ -1,5 +1,8 @@
 # Persistence
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API reference](api.md)
+
 The `encoding` package writes deterministic version-1 JSON:
 
 ```json
