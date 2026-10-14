@@ -7,7 +7,7 @@ require (
 	github.com/faustbrian/go-international v1.1.0
 	github.com/faustbrian/go-math v1.1.3
 	github.com/govalues/money v0.2.4
-	golang.org/x/text v0.42.0
+	golang.org/x/text v0.43.0
 )
 
 require github.com/govalues/decimal v0.1.36 // indirect
