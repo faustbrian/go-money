@@ -11,6 +11,12 @@ semantic versioning after the first tagged release.
   restrictions, weighted remainder ordering, conserved tax components and
   bounded persistence/ownership contracts without changing runtime behavior.
 
+## 2.1.0 - 2026-10-22
+
+### Changed
+
+- Publish the current source and documentation with a fresh immutable tag.
+
 ## 2.0.2 - 2026-10-07
 
 ### Changed
