@@ -8,7 +8,12 @@ compatibility baseline is `api/v3.txt`. V3 changes only the International
 dependency: `currency.Code` and `locale.Tag` in Money's API now come from
 `github.com/faustbrian/go-international/v5`, so update Money and International
 imports together. Calculation, rounding, persistence and wire behaviour match
-v2.
+v2, and stored encodings need no data migration. V2 and v3 Money, Context,
+Amount and sentinel values are distinct types; do not pass them between majors
+or expect cross-major `errors.Is` matches. Consumers still on v1 move from the
+unsuffixed `go-money` path. Moving to International v5 also crosses
+International's own v2 to v5 changes for other International packages a
+consumer imports; see its changelog.
 
 Published v2.0.0 requires Go 1.27.0; published v1.0.0 targets Go 1.26.6.
 The released v1 public API remains
@@ -17,9 +22,8 @@ import path `github.com/faustbrian/go-money/v2`; its baseline is `api/v2.txt`.
 
 The v2 boundary is required because rejecting more than
 `MaxMoneyBagEntries` total constructor inputs changes v1 acceptance behavior,
-even when duplicate identities would combine to fewer output entries. Existing
-consumers can remain on v1 or opt in to published v2.0.0 by updating imports
-and reviewing the documented ceilings.
+even when duplicate identities would combine to fewer output entries. Moving
+from v1 required updating imports and reviewing the documented ceilings.
 
 The maintained `go-knapsack/objective/gomoney/v2` and
 `go-knapsack/objective/money/v2` modules and the `go-library-tools` release

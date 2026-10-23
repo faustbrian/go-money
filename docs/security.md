@@ -3,11 +3,13 @@
 [Documentation map](index.md) · [Repository README](../README.md)
 [Next: Allocations](allocations.md)
 
-Model version: 2.0; release boundary: v2.0.0, published 2026-10-03.
+Model version: 2.0; release boundary: v2.0.0, published 2026-10-01. The v3
+module keeps this model unchanged; it changes only the International
+dependency.
 
-The released v1 line remains supported. This model describes the stricter
-fail-closed ceilings in published v2.0.0; it does not backport those guarantees
-to the distinct v1 release.
+Only the latest major receives security fixes; v1 and v2 remain published but
+receive no further releases once v3.0.0 is published. This model describes the
+fail-closed ceilings introduced in v2.0.0; they were never backported to v1.
 
 ## Assets and trust boundaries
 

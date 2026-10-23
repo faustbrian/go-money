@@ -29,10 +29,10 @@ examples, operational constraints, and contributor references.
 
 ## Status, lifecycle, and platform
 
-The published v2 module requires Go 1.27.0. The supported v1.0.0 module
-targets Go 1.26.6. Use a published tag rather than mutable `main` source for
-deployment.
-Both are portable Go and require no operating-system service or network
+The v3 module and the published v2 module require Go 1.27.0; the published
+v1.0.0 module targets Go 1.26.6. Only the latest major receives security fixes.
+Use a published tag rather than mutable `main` source for deployment.
+Every major is portable Go and require no operating-system service or network
 connection. Operations do not start background work or acquire resources that
 callers must close. A supplied context bounds cancellation only for the
 operation that receives it.

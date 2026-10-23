@@ -10,7 +10,9 @@ semantic versioning after the first tagged release.
 - Move the module to `github.com/faustbrian/go-money/v3` and adopt
   `go-international/v5`. `currency.Code` and `locale.Tag` in the public API
   are International v5 types; calculation, rounding, persistence and wire
-  behaviour are unchanged.
+  behaviour are unchanged and stored encodings need no migration. V2 and v3
+  values are distinct types and cannot be mixed in one build. Only the latest
+  major receives security fixes.
 
 ## Unreleased notes shipped by 2.1.0
 

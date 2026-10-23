@@ -8,7 +8,7 @@
 Baseline: `14c26b349c6d27886b5da2717d38ae7efd1d3f3d` (main).
 Owner: go-money source-documentation pass. Tier A: comments and audit evidence
 only; preserve all declarations, executable tokens, examples and test behavior.
-The public module is `github.com/faustbrian/go-money/v3` in `go.mod`; there are
+The public module is `github.com/faustbrian/go-money/v2` in `go.mod`; there are
 four packages: root money, encoding, format and moneytest. Consumers are users
 of these APIs and the package-owned examples. No consumer API or dependency
 change is planned. Named risks are misleading precision/rounding, cancellation,

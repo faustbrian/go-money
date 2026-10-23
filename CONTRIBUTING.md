@@ -43,7 +43,7 @@ go test . -run '^$' -fuzz '^FuzzAllocationConservation$' -fuzztime=2s
 
 Select the native fuzz target and package affected by your change. Ordinary
 tests run deterministic seeds and saved corpora. For shared checks, install
-the public `golib` v2.4.0 release declared in `.golib.yaml` and verify its
+the public `golib` v2.5.1 release declared in `.golib.yaml` and verify its
 checksums:
 
 ```bash

@@ -11,7 +11,7 @@ each absolute share, orders fractional remainders from largest to smallest,
 uses original ratio order as the stable tie-break, and reapplies the source
 sign. Zero and negative ratios are rejected.
 
-Planned v2 admits each typed ratio under the monetary arithmetic ceiling before
+Since v2, the module admits each typed ratio under the monetary arithmetic ceiling before
 formatting it, and rejects more than `MaxAllocationParts` ratios. Money-bag
 construction similarly rejects more than `MaxMoneyBagEntries` total inputs,
 including duplicate identities.
