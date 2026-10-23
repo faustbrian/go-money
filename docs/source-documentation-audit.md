@@ -183,7 +183,7 @@ coordinator-owned; this record does not certify those later boundaries.
 
 The local `source-docs-check` Make target runs the released source-only strict
 checker and is a prerequisite of ordinary/full checks and CI. Shared CI selects
-`source_documentation: check` using the immutable Tools v2.4.0 workflow and
+`source_documentation: check` using the immutable Tools v2.5.1 workflow and
 matching authenticated binary/checksum declaration. This verifies canonical
 package/exported/member comments, marker/generator availability, supported local
 links and narrow secret indicators; it does not certify the semantic truth of

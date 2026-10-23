@@ -3,7 +3,7 @@
 [Documentation map](index.md) · [Repository README](../README.md)
 [Next: API reference](api.md)
 
-Main prepares v3 at `github.com/faustbrian/go-money/v3`; its active
+The v3 module path is `github.com/faustbrian/go-money/v3`; its active
 compatibility baseline is `api/v3.txt`. V3 changes only the International
 dependency: `currency.Code` and `locale.Tag` in Money's API now come from
 `github.com/faustbrian/go-international/v5`, so update Money and International
@@ -12,7 +12,7 @@ v2, and stored encodings need no data migration. V2 and v3 Money, Context,
 Amount and sentinel values are distinct types; do not pass them between majors
 or expect cross-major `errors.Is` matches. Consumers still on v1 move from the
 unsuffixed `go-money` path. Moving to International v5 also crosses
-International's own v2 to v5 changes for other International packages a
+International's own v1 to v5 changes for other International packages a
 consumer imports; see its changelog.
 
 Published v2.0.0 requires Go 1.27.0; published v1.0.0 targets Go 1.26.6.
@@ -28,7 +28,7 @@ from v1 required updating imports and reviewing the documented ceilings.
 The maintained `go-knapsack/objective/gomoney/v2` and
 `go-knapsack/objective/money/v2` modules and the `go-library-tools` release
 compatibility consumer still select `github.com/faustbrian/go-money` v1.0.0.
-Their adoption of Money v2 requires separate consumer review and delivery;
+Their adoption of Money v3 requires separate consumer review and delivery;
 the released adapters expose nominal Money types, so changing those signatures
 requires their own major-version decision. Frozen historical compatibility
 cohorts remain unchanged.

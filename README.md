@@ -19,9 +19,8 @@ the boundary where a fixed amount is required.
 ## Adoption entry points
 
 The root module is `github.com/faustbrian/go-money/v3`. It requires Go 1.27.0.
-Main prepares v3.0.0, which moves `currency.Code` and `locale.Tag` to
-International v5; until it is published, pin the published v2 line with
-`go get github.com/faustbrian/go-money/v2@v2.1.0`.
+V3 moves `currency.Code` and `locale.Tag` to International v5; update Money
+and International imports together.
 Root subpackages share this module; they need no separate installation.
 
 Start with the [documentation map](docs/index.md) for package selection,
@@ -32,7 +31,7 @@ examples, operational constraints, and contributor references.
 The v3 module and the published v2 module require Go 1.27.0; the published
 v1.0.0 module targets Go 1.26.6. Only the latest major receives security fixes.
 Use a published tag rather than mutable `main` source for deployment.
-Every major is portable Go and require no operating-system service or network
+Every major is portable Go and requires no operating-system service or network
 connection. Operations do not start background work or acquire resources that
 callers must close. A supplied context bounds cancellation only for the
 operation that receives it.
@@ -59,8 +58,9 @@ go get github.com/faustbrian/go-money/v3@v3.0.0
 The v3 module uses `github.com/faustbrian/go-money/v3` and International v5
 currency and locale types; the
 [v2.0.0 release](https://github.com/faustbrian/go-money/releases/tag/v2.0.0)
-uses `github.com/faustbrian/go-money/v2` with International v1. Existing v1 consumers can retain
-their release or follow the [major-version migration guide](docs/compatibility.md).
+uses `github.com/faustbrian/go-money/v2` with International v1. Consumers on v1
+or v2 can keep their pinned release, which receives no further security fixes,
+or follow the [major-version migration guide](docs/compatibility.md).
 
 ## Quick start
 
@@ -124,7 +124,7 @@ retry state.
 Use ordinary Go tests and a focused two-second active fuzz command from
 [CONTRIBUTING.md](CONTRIBUTING.md#verification). `make check` and `make ci`
 retain the cheap no-float source check and bounded local assurance with public
-Tools v2.1.1. Required CI includes a checkout-only no-float job. Base-free checks
+Tools v2.5.1. Required CI includes a checkout-only no-float job. Base-free checks
 run deterministic seeds/corpora, not active fuzz campaigns. `make check-full`
 retains the no-float policy and full exact/conservation, fuzz, race, coverage,
 mutation and correctness-gated benchmark assurance for selected risks.
