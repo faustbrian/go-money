@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/faustbrian/go-money/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-money/actions/workflows/ci.yml)
 [![Documentation](https://img.shields.io/badge/docs-adoption_and_API-blue)](docs/index.md)
-[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money/v2.svg)](https://pkg.go.dev/github.com/faustbrian/go-money/v2)
+[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-money/v3.svg)](https://pkg.go.dev/github.com/faustbrian/go-money/v3)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-money?sort=semver)](https://github.com/faustbrian/go-money/releases)
 [![Go](https://img.shields.io/badge/go-1.27.0-00ADD8?logo=go)](https://go.dev/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -18,9 +18,10 @@ the boundary where a fixed amount is required.
 
 ## Adoption entry points
 
-The root module is `github.com/faustbrian/go-money/v2` (stable).
-It requires Go 1.27.0. Pin the published `v2.0.2` root tag
-with `go get github.com/faustbrian/go-money/v2@v2.0.2`.
+The root module is `github.com/faustbrian/go-money/v3`. It requires Go 1.27.0.
+Main prepares v3.0.0, which moves `currency.Code` and `locale.Tag` to
+International v5; until it is published, pin the published v2 line with
+`go get github.com/faustbrian/go-money/v2@v2.1.0`.
 Root subpackages share this module; they need no separate installation.
 
 Start with the [documentation map](docs/index.md) for package selection,
@@ -28,7 +29,7 @@ examples, operational constraints, and contributor references.
 
 ## Status, lifecycle, and platform
 
-The published v2.0.0 module requires Go 1.27.0. The supported v1.0.0 module
+The published v2 module requires Go 1.27.0. The supported v1.0.0 module
 targets Go 1.26.6. Use a published tag rather than mutable `main` source for
 deployment.
 Both are portable Go and require no operating-system service or network
@@ -52,11 +53,13 @@ use it when binary floating-point inputs or implicit rounding are required.
 ## Install
 
 ```sh
-go get github.com/faustbrian/go-money/v2@v2.0.0
+go get github.com/faustbrian/go-money/v3@v3.0.0
 ```
 
-The [v2.0.0 release](https://github.com/faustbrian/go-money/releases/tag/v2.0.0)
-uses `github.com/faustbrian/go-money/v2`. Existing v1 consumers can retain
+The v3 module uses `github.com/faustbrian/go-money/v3` and International v5
+currency and locale types; the
+[v2.0.0 release](https://github.com/faustbrian/go-money/releases/tag/v2.0.0)
+uses `github.com/faustbrian/go-money/v2` with International v1. Existing v1 consumers can retain
 their release or follow the [major-version migration guide](docs/compatibility.md).
 
 ## Quick start

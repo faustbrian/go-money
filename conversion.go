@@ -8,7 +8,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-international/v5/currency"
 	gomath "github.com/faustbrian/go-math"
 )
 

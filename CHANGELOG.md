@@ -3,7 +3,16 @@
 All notable changes follow Keep a Changelog conventions. Compatibility follows
 semantic versioning after the first tagged release.
 
-## Unreleased
+## 3.0.0 - 2026-10-23
+
+### Changed
+
+- Move the module to `github.com/faustbrian/go-money/v3` and adopt
+  `go-international/v5`. `currency.Code` and `locale.Tag` in the public API
+  are International v5 types; calculation, rounding, persistence and wire
+  behaviour are unchanged.
+
+## Unreleased notes shipped by 2.1.0
 
 ### Documentation
 

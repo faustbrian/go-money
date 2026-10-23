@@ -13,8 +13,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/faustbrian/go-international/locale"
-	"github.com/faustbrian/go-money/v2"
+	"github.com/faustbrian/go-international/v5/locale"
+	"github.com/faustbrian/go-money/v3"
 	textcurrency "golang.org/x/text/currency"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"

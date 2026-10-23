@@ -1,7 +1,7 @@
 package money
 
 import (
-	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-international/v5/currency"
 )
 
 // MaxScale bounds decimal work and serialized representation sizes.

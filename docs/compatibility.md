@@ -3,11 +3,17 @@
 [Documentation map](index.md) · [Repository README](../README.md)
 [Next: API reference](api.md)
 
+Main prepares v3 at `github.com/faustbrian/go-money/v3`; its active
+compatibility baseline is `api/v3.txt`. V3 changes only the International
+dependency: `currency.Code` and `locale.Tag` in Money's API now come from
+`github.com/faustbrian/go-international/v5`, so update Money and International
+imports together. Calculation, rounding, persistence and wire behaviour match
+v2.
+
 Published v2.0.0 requires Go 1.27.0; published v1.0.0 targets Go 1.26.6.
 The released v1 public API remains
 captured byte-for-byte in `api/v1.txt`. Published v2 uses the semantic
-import path `github.com/faustbrian/go-money/v2`; its active compatibility
-baseline is `api/v2.txt`.
+import path `github.com/faustbrian/go-money/v2`; its baseline is `api/v2.txt`.
 
 The v2 boundary is required because rejecting more than
 `MaxMoneyBagEntries` total constructor inputs changes v1 acceptance behavior,

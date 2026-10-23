@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	rhymond "github.com/Rhymond/go-money"
-	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-international/v5/currency"
 	"github.com/faustbrian/go-math/integer"
 	govalues "github.com/govalues/money"
 )

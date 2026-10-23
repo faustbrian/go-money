@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/faustbrian/go-international/currency"
+	"github.com/faustbrian/go-international/v5/currency"
 	gomath "github.com/faustbrian/go-math"
-	"github.com/faustbrian/go-money/v2"
+	"github.com/faustbrian/go-money/v3"
 )
 
 func TestAssertionsReportEveryFailedLaw(t *testing.T) {

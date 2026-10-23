@@ -5,11 +5,11 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-international/locale"
+	"github.com/faustbrian/go-international/v5/currency"
+	"github.com/faustbrian/go-international/v5/locale"
 	gomath "github.com/faustbrian/go-math"
-	"github.com/faustbrian/go-money/v2"
-	moneyformat "github.com/faustbrian/go-money/v2/format"
+	"github.com/faustbrian/go-money/v3"
+	moneyformat "github.com/faustbrian/go-money/v3/format"
 )
 
 func TestSharedValuesAndFormattersAreRaceSafe(t *testing.T) {

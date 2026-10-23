@@ -5,9 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-money/v2"
-	moneyencoding "github.com/faustbrian/go-money/v2/encoding"
+	"github.com/faustbrian/go-international/v5/currency"
+	"github.com/faustbrian/go-money/v3"
+	moneyencoding "github.com/faustbrian/go-money/v3/encoding"
 )
 
 func TestSQLScanRejectsOversizedInputBeforeCopying(t *testing.T) {

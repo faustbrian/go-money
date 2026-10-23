@@ -2,7 +2,8 @@
 
 ## Supported versions
 
-The stable v1 and v2 release lines are supported. Users should run the latest
+The stable v1 and v2 release lines are supported; once v3.0.0 is published, so
+is v3. Users should run the latest
 published patch in their selected major line because security fixes are not
 promised for superseded patch releases. Published v2.0.0 adds stricter
 fail-closed resource ceilings; mutable `main` is not a deployment target.

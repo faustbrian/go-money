@@ -5,9 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-international/locale"
-	"github.com/faustbrian/go-money/v2"
+	"github.com/faustbrian/go-international/v5/currency"
+	"github.com/faustbrian/go-international/v5/locale"
+	"github.com/faustbrian/go-money/v3"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )

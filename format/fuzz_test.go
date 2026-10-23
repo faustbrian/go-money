@@ -4,10 +4,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/faustbrian/go-international/currency"
-	"github.com/faustbrian/go-international/locale"
-	"github.com/faustbrian/go-money/v2"
-	moneyformat "github.com/faustbrian/go-money/v2/format"
+	"github.com/faustbrian/go-international/v5/currency"
+	"github.com/faustbrian/go-international/v5/locale"
+	"github.com/faustbrian/go-money/v3"
+	moneyformat "github.com/faustbrian/go-money/v3/format"
 )
 
 // FuzzLocale exercises bounded amount/locale text and display options. Successful

@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	international "github.com/faustbrian/go-international"
-	"github.com/faustbrian/go-international/currency"
+	international "github.com/faustbrian/go-international/v5"
+	"github.com/faustbrian/go-international/v5/currency"
 	gomath "github.com/faustbrian/go-math"
 	"github.com/faustbrian/go-math/integer"
 	"github.com/faustbrian/go-math/rational"
